@@ -1,4 +1,6 @@
-﻿namespace SmartHome
+﻿using System;
+
+namespace SmartHome
 {
     public abstract class Device(string name)
     {
@@ -15,9 +17,9 @@
             }
         }
 
-        private bool IsOn { get; set; } = false;
+        public bool IsOn { get; private set; } = false;
 
-        protected abstract string Type { get; }
+        public abstract string Type { get; }
 
         public virtual void TurnOn()
         {

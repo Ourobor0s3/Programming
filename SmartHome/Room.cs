@@ -1,4 +1,7 @@
-﻿namespace SmartHome
+﻿using System;
+using System.Collections.Generic;
+
+namespace SmartHome
 {
     public class Room
     {
@@ -9,7 +12,7 @@
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Room name cannot be null or empty.", nameof(name));
-            _devices = new List<Device>();
+            _devices = [];
             Name = name;
         }
 

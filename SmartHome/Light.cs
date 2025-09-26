@@ -1,4 +1,6 @@
-﻿namespace SmartHome
+﻿using System;
+
+namespace SmartHome
 {
     public class Light(string name) : Device(name), IControllable
     {
@@ -15,7 +17,7 @@
             }
         }
 
-        protected override string Type => "Light";
+        public override string Type => "Light";
 
         public override string Status()
         {

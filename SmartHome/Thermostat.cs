@@ -2,7 +2,8 @@
 
 namespace SmartHome
 {
-    public class Thermostat(string name) : Device(name), IControllable
+    public class Thermostat(string name) : Device(name),
+        IControllable, ISensor
     {
         private double _temperature = 20.0;
 
@@ -17,11 +18,17 @@ namespace SmartHome
             }
         }
 
-        protected override string Type => "Thermostat";
+        public override string Type => "Thermostat";
 
         public override string Status()
         {
             return $"{base.Status()} Temperature: {Temperature:F1}°C";
+        }
+
+        public bool TryRead(out decimal value)
+        {
+            value = (decimal)_temperature;
+            return true;
         }
     }
 }
