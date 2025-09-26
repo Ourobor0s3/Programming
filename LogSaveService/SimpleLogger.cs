@@ -1,15 +1,15 @@
 ﻿public static class SimpleLogger
 {
     private static readonly object _lock = new();
-    private static readonly string _logDir = "logs";
-    private static string _logFile => Path.Combine(_logDir, $"app-{DateTime.Now:yyyy-MM-dd}.log");
+    private const string LogDir = "logs";
+    private static string LogFile => Path.Combine(LogDir, $"app-{DateTime.Now:yyyy-MM-dd}.log");
 
     static SimpleLogger()
     {
-        Directory.CreateDirectory(_logDir);
+        Directory.CreateDirectory(LogDir);
     }
 
-    public static void Log(string message, string level = "INFO")
+    private static void Log(string message, string level = "INFO")
     {
         var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         var logLine = $"[{timestamp}] {level}: {message}";
@@ -17,7 +17,7 @@
         lock (_lock)
         {
             Console.WriteLine(logLine);
-            File.AppendAllLines(_logFile, new[] { logLine });
+            File.AppendAllLines(LogFile, new[] { logLine });
         }
     }
 

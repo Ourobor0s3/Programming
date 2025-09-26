@@ -1,13 +1,25 @@
 ﻿namespace SmartHome
 {
-    public class Light : Device, IControllable
+    public class Light(string name) : Device(name), IControllable
     {
-        public string _brightness { get; protected set; }
-        public override string Type { get; }
+        private int _brightness = 0;
 
-        public Light(string name) : base(name)
+        public int Brightness
         {
-            Type = "Light";
+            get => _brightness;
+            set
+            {
+                if (value is < 0 or > 100)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Brightness must be between 0 and 100.");
+                _brightness = value;
+            }
+        }
+
+        protected override string Type => "Light";
+
+        public override string Status()
+        {
+            return $"{base.Status()} Brightness: {Brightness}%";
         }
     }
 }

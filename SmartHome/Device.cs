@@ -1,35 +1,40 @@
 ﻿namespace SmartHome
 {
-    public abstract class Device
+    public abstract class Device(string name)
     {
-        public string _id { get; }
-        public string _name { get; init; }
-        public bool _isOn { get; protected set; }
+        public string Id { get; } = Guid.NewGuid().ToString();
 
-        public abstract string Type { get; }
-
-        protected Device(string name)
+        private string Name
         {
-            _id = Guid.NewGuid().ToString();
-            _name = name;
+            get => name;
+            init
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Name cannot be null or empty.", nameof(value));
+                name = value;
+            }
         }
+
+        private bool IsOn { get; set; } = false;
+
+        protected abstract string Type { get; }
 
         public virtual void TurnOn()
         {
-            _isOn = true;
-            SimpleLogger.Info($"Device {_id}:{_name} turned on");
+            IsOn = true;
+            SimpleLogger.Info($"Device {Id}:{Name} turned on");
         }
 
         public virtual void TurnOff()
         {
-            _isOn = false;
-            SimpleLogger.Info($"Device {_id}:{_name} turned off");
+            IsOn = false;
+            SimpleLogger.Info($"Device {Id}:{Name} turned off");
 
         }
 
         public virtual string Status()
         {
-            return $"Device {_id}:{_name} status - {_isOn}, type - {Type}";
+            return $"Device {Id}:{Name} status - {IsOn}, type - {Type}";
         }
     }
 }
