@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animals", "Animals\Animals.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome", "SmartHome\SmartHome.csproj", "{2A06F6EC-DC41-40CE-ACF5-F7EC0F823B99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSaveService", "LogSaveService\LogSaveService.csproj", "{94176761-EE0F-419A-949E-0EEAB1C2C17D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{2A06F6EC-DC41-40CE-ACF5-F7EC0F823B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A06F6EC-DC41-40CE-ACF5-F7EC0F823B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A06F6EC-DC41-40CE-ACF5-F7EC0F823B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94176761-EE0F-419A-949E-0EEAB1C2C17D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94176761-EE0F-419A-949E-0EEAB1C2C17D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94176761-EE0F-419A-949E-0EEAB1C2C17D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94176761-EE0F-419A-949E-0EEAB1C2C17D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6AFD63BF-1895-4A92-83B9-9A1432271947} = {7A124446-499A-431A-92FC-AD4BA96184DE}
