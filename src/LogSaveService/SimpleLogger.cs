@@ -1,4 +1,6 @@
-﻿public static class SimpleLogger
+﻿namespace LogSaveService;
+
+public static class SimpleLogger
 {
     private static readonly object _lock = new();
     private const string LogDir = "logs";

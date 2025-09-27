@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SmartHome.Class;
 
-namespace SmartHome
+namespace SmartHome.Controllers.Abstract
 {
     public abstract class ControllerBase
     {

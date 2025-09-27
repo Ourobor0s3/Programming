@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SmartHome.Controllers.Abstract;
+using SmartHome.Interface;
 
-namespace SmartHome
+namespace SmartHome.Class
 {
     public class Thermostat(string name) : Device(name),
         IControllable, ISensor

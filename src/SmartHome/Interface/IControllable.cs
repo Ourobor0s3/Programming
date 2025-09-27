@@ -1,4 +1,4 @@
-﻿namespace SmartHome
+﻿namespace SmartHome.Interface
 {
     public interface IControllable
     {

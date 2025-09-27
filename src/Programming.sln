@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Programming", "Programming.csproj", "{25F9785F-A72A-418A-9E40-11792BD80701}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Labs", "Labs", "{7A124446-499A-431A-92FC-AD4BA96184DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animals", "Animals\Animals.csproj", "{6AFD63BF-1895-4A92-83B9-9A1432271947}"
@@ -16,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{25F9785F-A72A-418A-9E40-11792BD80701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25F9785F-A72A-418A-9E40-11792BD80701}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25F9785F-A72A-418A-9E40-11792BD80701}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25F9785F-A72A-418A-9E40-11792BD80701}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AFD63BF-1895-4A92-83B9-9A1432271947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AFD63BF-1895-4A92-83B9-9A1432271947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AFD63BF-1895-4A92-83B9-9A1432271947}.Release|Any CPU.ActiveCfg = Release|Any CPU

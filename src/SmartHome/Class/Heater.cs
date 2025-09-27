@@ -1,4 +1,7 @@
-﻿namespace SmartHome
+﻿using SmartHome.Controllers.Abstract;
+using SmartHome.Interface;
+
+namespace SmartHome.Class
 {
     public class Heater(string name) : Device(name), IControllable
     {

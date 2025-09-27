@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SmartHome.Controllers.Abstract;
+using SmartHome.Interface;
 
-namespace SmartHome
+namespace SmartHome.Class
 {
     public class Light(string name) : Device(name), IControllable
     {
