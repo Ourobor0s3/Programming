@@ -1,4 +1,4 @@
-﻿namespace SmartHome.Interface
+﻿namespace Lab3.Interface
 {
     public interface IControllable
     {

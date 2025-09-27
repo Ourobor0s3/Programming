@@ -1,6 +1,6 @@
 ﻿using LogSaveService;
 
-namespace SmartHome.Controllers.Abstract
+namespace Lab3.Controllers.Abstract
 {
     public abstract class Device(string name)
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SmartHome.Class;
-using SmartHome.Controllers;
+using Lab3.Class;
+using Lab3.Controllers;
 
-namespace SmartHome
+namespace Lab3
 {
     public static class Demo
     {

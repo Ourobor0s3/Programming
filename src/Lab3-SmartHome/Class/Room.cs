@@ -1,7 +1,7 @@
-﻿using SmartHome.Controllers.Abstract;
-using SmartHome.Interface;
+﻿using Lab3.Controllers.Abstract;
+using Lab3.Interface;
 
-namespace SmartHome.Class
+namespace Lab3.Class
 {
     public class Room
     {

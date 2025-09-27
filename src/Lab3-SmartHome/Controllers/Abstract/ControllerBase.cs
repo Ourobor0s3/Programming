@@ -1,6 +1,6 @@
-﻿using SmartHome.Class;
+﻿using Lab3.Class;
 
-namespace SmartHome.Controllers.Abstract
+namespace Lab3.Controllers.Abstract
 {
     public abstract class ControllerBase
     {

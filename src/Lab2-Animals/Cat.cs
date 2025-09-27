@@ -1,4 +1,4 @@
-namespace Animals
+namespace Lab2
 {
     public class Cat : Animal, IPet
     {

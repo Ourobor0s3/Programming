@@ -1,6 +1,6 @@
-﻿using SmartHome.Class;
+﻿using Lab3.Class;
 
-namespace SmartHome
+namespace Lab3
 {
     public static class DemoService
     {

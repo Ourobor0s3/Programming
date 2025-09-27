@@ -1,8 +1,8 @@
-﻿using SmartHome.Class;
-using SmartHome.Controllers.Abstract;
-using SmartHome.Interface;
+﻿using Lab3.Class;
+using Lab3.Controllers.Abstract;
+using Lab3.Interface;
 
-namespace SmartHome.Controllers
+namespace Lab3.Controllers
 {
     public class HomeController(IEnumerable<Room> rooms) : ControllerBase(rooms)
     {
@@ -20,10 +20,15 @@ namespace SmartHome.Controllers
 
                 foreach (var device in room.GetDevices())
                 {
-                    if (device is ISensor sensor)
-                        sensors.Add(sensor);
-                    if (device is Heater heater)
-                        heaters.Add(heater);
+                    switch (device)
+                    {
+                        case ISensor sensor:
+                            sensors.Add(sensor);
+                            break;
+                        case Heater heater:
+                            heaters.Add(heater);
+                            break;
+                    }
                 }
 
                 // Для каждого сенсора проверяем температуру
