@@ -15,20 +15,13 @@
 
 ## 📂 Структура репозитория
 
-src/
-
-├── Lab2-Animals/ # Лабораторная №2: Animals
-
-├── Lab3-SmartHome/ # Лабораторная №3: SmartHome
-
-├── Lab4-BookCatalog/ # Лабораторная №4: BookCatalog
-
-├── LogSaveService/ # Сервис для логирования
-
-├── Reports/ # Отчёты по лабораторным работам (DOCX)
-
-├── Tasks/ # Условия и описания заданий
-
+src/ <br />
+├── Lab2-Animals/ # Лабораторная №2: Animals <br />
+├── Lab3-SmartHome/ # Лабораторная №3: SmartHome <br />
+├── Lab4-BookCatalog/ # Лабораторная №4: BookCatalog <br />
+├── LogSaveService/ # Сервис для логирования <br />
+├── Reports/ # Отчёты по лабораторным работам (DOCX) <br />
+├── Tasks/ # Условия и описания заданий <br />
 └── README.md # Этот файл
 
 
