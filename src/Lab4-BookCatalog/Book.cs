@@ -1,12 +1,17 @@
-﻿namespace Lab4_BookCatalog
+﻿using System.ComponentModel.DataAnnotations;
+
+public class Book
 {
-    [Serializable]
-    public class Book
-    {
-        public string ISBN { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int? Year { get; set; }
-        public int? Pages { get; set; }
-    }
+    [Key]
+    [MaxLength(32)]
+    public string ISBN { get; set; } = string.Empty;
+
+    [Required]
+    public string Title { get; set; } = string.Empty;
+
+    [Required]
+    public string Author { get; set; } = string.Empty;
+
+    public int? Year { get; set; }
+    public int? Pages { get; set; }
 }

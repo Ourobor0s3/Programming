@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Xml.Serialization;
 using LogSaveService;
 using Npgsql;
+using NpgsqlTypes;
 
 namespace Lab4_BookCatalog
 {
@@ -11,7 +12,8 @@ namespace Lab4_BookCatalog
     {
         private const string ConnectionString = @"Host=localhost;Database=bookcatalog;Port=5433;User ID=postgres;Password=admin;";
 
-        public static void Main()
+        public static void Main(){}
+        public static void Run1()
         {
             var books = new List<Book>();
             var successCount = 0;
@@ -19,7 +21,7 @@ namespace Lab4_BookCatalog
             try
             {
                 // 1. Парсинг CSV
-                books = ParseCsv("../../../../Tasks/Lab4/books.csv");
+                books = ProgramService.ParseCsv("../../../../Tasks/Lab4/books.csv");
 
                 SimpleLogger.Info($"Прочитано {books.Count} записей из CSV.");
             }
@@ -34,28 +36,32 @@ namespace Lab4_BookCatalog
             {
                 using var connection = new NpgsqlConnection(ConnectionString);
                 connection.Open();
+                using var transaction = connection.BeginTransaction();
 
-                foreach (var book in books)
+                try
                 {
-                    try
+                    foreach (var book in books)
                     {
                         using var cmd = new NpgsqlCommand(
-                            "INSERT INTO books (isbn, title, author, year, pages) VALUES (@ISBN, @Title, @Author, @Year, @Pages)",
-                            connection);
+                            "insert into \"Books\" (\"ISBN\", \"Title\", \"Author\", \"Year\", \"Pages\") "
+                            + "values (@ISBN, @Title, @Author, @Year, @Pages)",
+                            connection, transaction);
 
-                        cmd.Parameters.AddWithValue("@ISBN", book.ISBN ?? "");
-                        cmd.Parameters.AddWithValue("@Title", book.Title ?? "");
-                        cmd.Parameters.AddWithValue("@Author", book.Author ?? "");
-                        cmd.Parameters.AddWithValue("@Year", book.Year);
-                        cmd.Parameters.AddWithValue("@Pages", book.Pages);
+                        cmd.Parameters.Add("@ISBN", NpgsqlDbType.Text).Value = book.ISBN ?? "";
+                        cmd.Parameters.Add("@Title", NpgsqlDbType.Text).Value = book.Title ?? "";
+                        cmd.Parameters.Add("@Author", NpgsqlDbType.Text).Value = book.Author ?? "";
+                        cmd.Parameters.Add("@Year", NpgsqlDbType.Integer).Value = (object?)book.Year ?? DBNull.Value;
+                        cmd.Parameters.Add("@Pages", NpgsqlDbType.Integer).Value = (object?)book.Pages ?? DBNull.Value;
 
                         cmd.ExecuteNonQuery();
                         successCount++;
                     }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.Error($"Ошибка вставки книги ISBN={book.ISBN}: {ex.Message}");
-                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    SimpleLogger.Error($"Ошибка транзакции: {ex.Message}");
                 }
 
                 SimpleLogger.Info($"Успешно вставлено {successCount} записей в БД.");
@@ -69,8 +75,8 @@ namespace Lab4_BookCatalog
             // 3. Экспорт в JSON и XML
             try
             {
-                ExportToJson(books, "books.json");
-                ExportToXml(books, "books.xml");
+                ProgramService.ExportToJson(books, "books.json");
+                ProgramService.ExportToXml(books, "books.xml");
                 SimpleLogger.Info("Экспорт в JSON и XML завершён успешно.");
             }
             catch (Exception ex)
@@ -79,94 +85,54 @@ namespace Lab4_BookCatalog
             }
         }
 
-        // --- Остальные методы без изменений (они не зависят от СУБД) ---
-
-        static List<Book> ParseCsv(string filePath)
+        public static void Run2()
         {
-            var books = new List<Book>();
-            var lines = File.ReadAllLines(filePath, Encoding.UTF8);
-
-            for (int i = 1; i < lines.Length; i++)
+            // Создаём БД и таблицу при первом запуске
+            using (var context = new BooksContext())
             {
-                var line = lines[i];
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                var fields = ParseCsvLine(line);
-                if (fields.Length != 5)
-                {
-                    throw new FormatException($"Неверное количество полей в строке {i + 1}: {line}");
-                }
-
-                try
-                {
-                    var book = new Book
-                    {
-                        ISBN = fields[0].Trim(),
-                        Title = fields[1].Trim(),
-                        Author = fields[2].Trim(),
-                        Year = int.Parse(fields[3].Trim(), CultureInfo.InvariantCulture),
-                        Pages = int.Parse(fields[4].Trim(), CultureInfo.InvariantCulture)
-                    };
-                    books.Add(book);
-                }
-                catch (Exception ex)
-                {
-                    throw new FormatException($"Ошибка парсинга строки {i + 1}: {ex.Message}. Строка: {line}");
-                }
+                context.Database.EnsureCreatedAsync();
             }
 
-            return books;
-        }
-
-        static string[] ParseCsvLine(string line)
-        {
-            var fields = new List<string>();
-            bool inQuotes = false;
-            var current = new StringBuilder();
-
-            for (int i = 0; i < line.Length; i++)
+            while (true)
             {
-                char c = line[i];
+                Console.WriteLine("=== УПРАВЛЕНИЕ КАТАЛОГОМ КНИГ ===");
+                Console.WriteLine("1. Добавить книгу");
+                Console.WriteLine("2. Обновить книгу");
+                Console.WriteLine("3. Удалить книгу по ISBN");
+                Console.WriteLine("4. Поиск по автору или названию");
+                Console.WriteLine("5. Синхронизация с books.json");
+                Console.WriteLine("0. Выход");
+                Console.Write("\nВыберите действие: ");
 
-                if (c == '"')
+                var choice = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (choice)
                 {
-                    if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
-                    {
-                        current.Append('"');
-                        i++;
-                    }
-                    else
-                    {
-                        inQuotes = !inQuotes;
-                    }
-                }
-                else if (c == ',' && !inQuotes)
-                {
-                    fields.Add(current.ToString());
-                    current.Clear();
-                }
-                else
-                {
-                    current.Append(c);
+                    case "1":
+                        CRUD.AddBookAsync();
+                        break;
+                    case "2":
+                        CRUD.UpdateBookAsync();
+                        break;
+                    case "3":
+                        CRUD.DeleteBookAsync();
+                        break;
+                    case "4":
+                        CRUD.SearchBooksAsync();
+                        break;
+                    case "5":
+                        SyncService.Sync("update_db");
+                        break;
+                    case "0":
+                        Console.WriteLine("Выход...");
+                        return;
+                    default:
+                        Console.WriteLine("Неверный выбор. Нажмите любую клавишу...");
+                        Console.ReadKey();
+                        break;
                 }
             }
-
-            fields.Add(current.ToString());
-            return fields.ToArray();
-        }
-
-        static void ExportToJson(List<Book> books, string filePath)
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(books, options);
-            File.WriteAllText(filePath, json, Encoding.UTF8);
-        }
-
-        static void ExportToXml(List<Book> books, string filePath)
-        {
-            var serializer = new XmlSerializer(typeof(List<Book>));
-            using var writer = new StreamWriter(filePath, false, Encoding.UTF8);
-            serializer.Serialize(writer, books);
         }
     }
 }
