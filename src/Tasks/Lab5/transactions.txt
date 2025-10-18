@@ -1,2 +1,3 @@
-2025-09-01,Food,12.50,Lunch
-2025-09-02,Transport,2.75,Bus
+2025-08-29,Transport,3.55,Bus
+2025-09-01,Food,11.50,Lunch
+2025-09-02,Transport,2.65,Bus

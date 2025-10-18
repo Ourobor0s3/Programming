@@ -22,7 +22,7 @@ namespace Lab5_CostAccounting
                 entity.Property(e => e.Id).IsRequired();
                 entity.Property(e => e.Date).IsRequired().HasColumnType("date");
                 entity.Property(e => e.Category).HasColumnType("text");
-                entity.Property(e => e.Amount).IsRequired().HasColumnType("int");
+                entity.Property(e => e.Amount).IsRequired().HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Note).HasColumnType("text");
             });
         }

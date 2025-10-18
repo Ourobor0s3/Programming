@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Xml.Serialization;
 
@@ -11,7 +12,7 @@ namespace Lab5_CostAccounting
             var transactions = new List<Transaction>();
             var lines = File.ReadAllLines(filePath, Encoding.UTF8);
 
-            for (var i = 1; i < lines.Length; i++)
+            for (var i = 0; i < lines.Length; i++)
             {
                 var line = lines[i];
                 if (string.IsNullOrWhiteSpace(line)) continue;
@@ -23,7 +24,7 @@ namespace Lab5_CostAccounting
                     {
                         Date = DateTime.Parse(fields[0]),
                         Category = fields[1],
-                        Amount = decimal.Parse(fields[2]),
+                        Amount = decimal.Parse(fields[2], CultureInfo.InvariantCulture),
                         Note = fields[3],
                     };
                     transactions.Add(transaction);
@@ -70,18 +71,18 @@ namespace Lab5_CostAccounting
             return fields.ToArray();
         }
 
-        public static void ExportToJson(List<Transaction> transaction, string filePath)
+        public static void ExportToJson<T>(List<T> list, string filePath)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(transaction, options);
+            var json = JsonSerializer.Serialize(list, options);
             File.WriteAllText(filePath, json, Encoding.UTF8);
         }
 
-        public static void ExportToXml(List<Transaction> transaction, string filePath)
+        public static void ExportToXml<T>(List<T> list, string filePath)
         {
-            var serializer = new XmlSerializer(typeof(List<Transaction>));
+            var serializer = new XmlSerializer(typeof(List<T>));
             using var writer = new StreamWriter(filePath, false, Encoding.UTF8);
-            serializer.Serialize(writer, transaction);
+            serializer.Serialize(writer, list);
         }
     }
 }

@@ -8,16 +8,16 @@ namespace Lab5_CostAccounting
     {
         private const string ConnectionString = @"Host=localhost;Database=lab5-transaction;Port=5433;User ID=postgres;Password=admin;";
 
+        public static void Main(){}
         public static void Run1()
         {
-            var transactions = new List<Transaction>();
+            List<Transaction> transactions;
             var successCount = 0;
 
             try
             {
                 // 1. Парсинг Txt
-                transactions = ExportService.ParseFile("../../../../Tasks/Lab5/transaction.txt");
-
+                transactions = ExportService.ParseFile("../../../../Tasks/Lab5/transactions.txt");
                 SimpleLogger.Info($"Прочитано {transactions.Count} записей из CSV.");
             }
             catch (Exception ex)
@@ -38,11 +38,14 @@ namespace Lab5_CostAccounting
                     foreach (var trans in transactions)
                     {
                         using var cmd = new NpgsqlCommand(
-                            "insert into \"Transaction\" (\"ISBN\", \"Title\", \"Author\", \"Year\", \"Pages\") "
-                            + "values (@ISBN, @Title, @Author, @Year, @Pages)",
+                            $"insert into \"Transactions\" (\"Date\", \"Category\", \"Amount\", \"Note\") "
+                                + "values (@Date, @Category, @Amount, @Note);",
                             connection, transaction);
 
-                        // cmd.Parameters.Add("@ISBN", NpgsqlDbType.Text).Value = trans.ISBN ?? "";
+                        cmd.Parameters.Add("@Date", NpgsqlDbType.Date).Value = trans.Date;
+                        cmd.Parameters.Add("@Category", NpgsqlDbType.Text).Value = trans.Category ?? "";
+                        cmd.Parameters.Add("@Amount", NpgsqlDbType.Numeric).Value = trans.Amount;
+                        cmd.Parameters.Add("@Note", NpgsqlDbType.Text).Value = trans.Note ?? "";
 
                         cmd.ExecuteNonQuery();
                         successCount++;
@@ -66,6 +69,18 @@ namespace Lab5_CostAccounting
             // 3. Генерация отчета
             try
             {
+                var report = transactions
+                    .GroupBy(x => x.Category)
+                    .Select(g => new
+                    {
+                        Category = g.Key,
+                        Amount = g.Sum(x => x.Amount),
+                    })
+                    .Cast<object>()
+                    .ToList();
+                ExportService.ExportToJson(report, $"{DateTime.Now.ToShortDateString()}-summary.json");
+                ExportService.ExportToXml(transactions, $"{DateTime.Now.ToShortDateString()}-summary.xml");
+                SimpleLogger.Info("Экспорт в JSON и XML завершён успешно.");
             }
             catch (Exception ex)
             {
@@ -83,12 +98,7 @@ namespace Lab5_CostAccounting
 
             while (true)
             {
-                Console.WriteLine("=== УПРАВЛЕНИЕ КАТАЛОГОМ КНИГ ===");
-                Console.WriteLine("1. Добавить книгу");
-                Console.WriteLine("2. Обновить книгу");
-                Console.WriteLine("3. Удалить книгу по ISBN");
-                Console.WriteLine("4. Поиск по автору или названию");
-                Console.WriteLine("5. Синхронизация с books.json");
+                Console.WriteLine("=== УПРАВЛЕНИЕ ТРАНЗАКЦИЯМИ ===");
                 Console.WriteLine("0. Выход");
                 Console.Write("\nВыберите действие: ");
 
@@ -97,6 +107,9 @@ namespace Lab5_CostAccounting
 
                 switch (choice)
                 {
+                    case "0":
+                        Console.WriteLine("Выход...");
+                        return;
                     default:
                         Console.WriteLine("Неверный выбор. Нажмите любую клавишу...");
                         Console.ReadKey();
