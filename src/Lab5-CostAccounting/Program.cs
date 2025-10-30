@@ -1,4 +1,5 @@
-﻿using LogSaveService;
+﻿using System.Globalization;
+using LogSaveService;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -90,31 +91,66 @@ namespace Lab5_CostAccounting
 
         public static void Run2()
         {
-            // Создаём БД и таблицу при первом запуске
-            using (var context = new TransactionsContext())
+            try
             {
-                context.Database.EnsureCreatedAsync();
-            }
-
-            while (true)
-            {
-                Console.WriteLine("=== УПРАВЛЕНИЕ ТРАНЗАКЦИЯМИ ===");
-                Console.WriteLine("0. Выход");
-                Console.Write("\nВыберите действие: ");
-
-                var choice = Console.ReadLine();
-                Console.WriteLine();
-
-                switch (choice)
+                // Создаём БД и таблицу при первом запуске
+                using (var context = new TransactionsContext())
                 {
-                    case "0":
-                        Console.WriteLine("Выход...");
-                        return;
-                    default:
-                        Console.WriteLine("Неверный выбор. Нажмите любую клавишу...");
-                        Console.ReadKey();
-                        break;
+                    context.Database.EnsureCreatedAsync();
                 }
+
+                var prevTransactions = new List<Transaction>();
+                while (true)
+                {
+                    Console.WriteLine("\n=== УПРАВЛЕНИЕ ТРАНЗАКЦИЯМИ ===");
+                    Console.WriteLine("1. Отчет по категории за весь период");
+                    Console.WriteLine("2. Получить фильтрованную выборку:");
+                    Console.WriteLine("3. Экспорт предыдущей выборки в xml и json");
+                    Console.WriteLine("0. Выход");
+                    Console.Write("\nВыберите действие: ");
+
+                    var choice = Console.ReadLine();
+                    Console.WriteLine();
+
+                    switch (choice)
+                    {
+                        case "1":
+                            _ = TransactionService.GetJsonSumCategory();
+                            break;
+                        case "2":
+                            prevTransactions = TransactionService.GetTransactions(
+                                skip: 0,
+                                take: 4,
+                                sortDate: false,
+                                sortCategory: false,
+                                getDate: null,
+                                getCategory: null);
+
+                            break;
+                        case "3":
+                            if (prevTransactions.Count == 0)
+                            {
+                                Console.WriteLine("Выборка пустая, создание отчета невозможно!");
+                                break;
+                            }
+
+                            ExportService.ExportToJson(prevTransactions, $"transactions_export.json");
+                            ExportService.ExportToXml(prevTransactions, $"transactions_export.xml");
+                            Console.WriteLine("Экспорт произошел успешно");
+                            break;
+                        case "0":
+                            Console.WriteLine("Выход...");
+                            return;
+                        default:
+                            Console.WriteLine("Неверный выбор. Нажмите любую клавишу...");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
     }
