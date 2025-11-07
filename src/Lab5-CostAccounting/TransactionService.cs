@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using LogSaveService;
 using Microsoft.EntityFrameworkCore;
 using static System.Console;
 
@@ -15,27 +16,50 @@ namespace Lab5_CostAccounting
             string? getCategory = null)
         {
             using var context = new TransactionsContext();
-            var transactions = context.Transactions;
+            IQueryable<Transaction> query = context.Transactions;
 
-            if (getDate != null)
-                transactions.Where(x => x.Date.Date.Equals(getDate.Value.Date));
+            if (getDate.HasValue)
+            {
+                var date = getDate.Value.Date;
+                var nextDay = date.AddDays(1);
+                query = query.Where(x => x.Date >= date && x.Date < nextDay);
+            }
 
-            if (getCategory != null)
-                transactions.Where(x => x.Category!.Equals(getCategory));
+            if (!string.IsNullOrWhiteSpace(getCategory))
+            {
+                var cat = getCategory.Trim();
+                query = query.Where(x => x.Category != null &&
+                                         x.Category.Equals(cat, StringComparison.OrdinalIgnoreCase));
+            }
 
-            if (sortDate)
-                transactions.OrderBy(x => x.Date);
+            switch (sortDate)
+            {
+                case true when sortCategory:
+                    query = query.OrderBy(x => x.Date).ThenBy(x => x.Category);
+                    break;
+                case true:
+                    query = query.OrderBy(x => x.Date);
+                    break;
+                default:
+                {
+                    if (sortCategory)
+                    {
+                        query = query.OrderBy(x => x.Category);
+                    }
 
-            if (sortCategory)
-                transactions.OrderBy(x => x.Category);
+                    break;
+                }
+            }
 
-            var res = transactions
+            var res = query
                 .Skip(skip)
                 .Take(take)
-                .ToListAsync().Result;
+                .ToList();
+
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(res, options);
-            WriteLine($"Фильтрованный отчет: {json}");
+            SimpleLogger.Info($"Фильтрованный отчет: {json}");
+
             return res;
         }
 
@@ -55,11 +79,11 @@ namespace Lab5_CostAccounting
                     .ToListAsync().Result;
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 var json = JsonSerializer.Serialize(transactions, options);
-                WriteLine($"Отчет: {json}");
+                SimpleLogger.Info($"Отчет: {json}");
             }
             catch (Exception ex)
             {
-                WriteLine(ex);
+                SimpleLogger.Error(ex.Message);
             }
 
         }

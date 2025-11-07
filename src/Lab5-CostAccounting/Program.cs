@@ -118,13 +118,38 @@ namespace Lab5_CostAccounting
                             _ = TransactionService.GetJsonSumCategory();
                             break;
                         case "2":
+                            Console.WriteLine("Введите фильтр 'skip' (по умолчанию = 0):");
+                            var skipInput = Console.ReadLine();
+                            var skip = string.IsNullOrWhiteSpace(skipInput) ? 0 : int.TryParse(skipInput, out var s) ? s : 0;
+
+                            Console.WriteLine("Введите фильтр 'take' (по умолчанию = 4):");
+                            var takeInput = Console.ReadLine();
+                            var take = string.IsNullOrWhiteSpace(takeInput) ? 4 : int.TryParse(takeInput, out var t) ? t : 4;
+
+                            Console.WriteLine("Сортировать по дате? (введите 'true'/'false', по умолчанию = false):");
+                            var sortDateInput = Console.ReadLine();
+                            var sortDate = bool.TryParse(sortDateInput, out var sd) && sd;
+
+                            Console.WriteLine("Сортировать по категории? (введите 'true'/'false', по умолчанию = false):");
+                            var sortCategoryInput = Console.ReadLine();
+                            var sortCategory = bool.TryParse(sortCategoryInput, out var sc) && sc;
+
+                            Console.WriteLine("Введите дату фильтрации в формате ГГГГ-ММ-ДД (по умолчанию = null):");
+                            var getDateInput = Console.ReadLine();
+                            var getDate = DateTime.TryParse(getDateInput, out var d) ? d : (DateTime?)null;
+
+                            Console.WriteLine("Введите категорию для фильтрации (по умолчанию = null):");
+                            var getCategoryInput = Console.ReadLine();
+                            var getCategory = string.IsNullOrWhiteSpace(getCategoryInput) ? null : getCategoryInput;
+
                             prevTransactions = TransactionService.GetTransactions(
-                                skip: 0,
-                                take: 4,
-                                sortDate: false,
-                                sortCategory: false,
-                                getDate: null,
-                                getCategory: null);
+                                skip: skip,
+                                take: take,
+                                sortDate: sortDate,
+                                sortCategory: sortCategory,
+                                getDate: getDate,
+                                getCategory: getCategory
+                            );
 
                             break;
                         case "3":
@@ -136,7 +161,7 @@ namespace Lab5_CostAccounting
 
                             ExportService.ExportToJson(prevTransactions, $"transactions_export.json");
                             ExportService.ExportToXml(prevTransactions, $"transactions_export.xml");
-                            Console.WriteLine("Экспорт произошел успешно");
+                            SimpleLogger.Info("Экспорт произошел успешно");
                             break;
                         case "0":
                             Console.WriteLine("Выход...");
@@ -150,7 +175,7 @@ namespace Lab5_CostAccounting
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                SimpleLogger.Error(ex.Message);
             }
         }
     }
