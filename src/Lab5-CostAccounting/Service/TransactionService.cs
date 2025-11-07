@@ -1,9 +1,8 @@
 ﻿using System.Text.Json;
 using LogSaveService;
 using Microsoft.EntityFrameworkCore;
-using static System.Console;
 
-namespace Lab5_CostAccounting
+namespace Lab5_CostAccounting.Service
 {
     public static class TransactionService
     {

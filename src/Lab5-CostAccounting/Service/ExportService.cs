@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace Lab5_CostAccounting
+namespace Lab5_CostAccounting.Service
 {
     public static class ExportService
     {

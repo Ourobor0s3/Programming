@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="StypeCop" Description=" " ToolsVersion="15.0">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" /><!--None SA0001XmlCommentAnalysisDisabled -->
+    <Rule Id="SA0002" Action="None" /><!--None SA0002InvalidSettingsFile-->
+    <Rule Id="SA1000" Action="None" /><!--None SA1000KeywordsMustBeSpacedCorrectly-->
+    <Rule Id="SA1001" Action="Error" /><!--SA1001CommasMustBeSpacedCorrectly-->
+    <Rule Id="SA1002" Action="Error" /><!--SA1002SemicolonsMustBeSpacedCorrectly-->
+    <Rule Id="SA1003" Action="Error" /><!--SA1003SymbolsMustBeSpacedCorrectly-->
+    <Rule Id="SA1004" Action="Error" /><!--SA1004DocumentationLinesMustBeginWithSingleSpace-->
+    <Rule Id="SA1005" Action="Error" /><!--SA1005SingleLineCommentsMustBeginWithSingleSpace-->
+    <Rule Id="SA1006" Action="Error" /><!--SA1006PreprocessorKeywordsMustNotBePrecededBySpace-->
+    <Rule Id="SA1007" Action="Error" /><!--SA1007OperatorKeywordMustBeFollowedBySpace-->
+    <Rule Id="SA1008" Action="Error" /><!--SA1008OpeningParenthesisMustBeSpacedCorrectly-->
+    <Rule Id="SA1009" Action="None" /><!--None SA1009ClosingParenthesisMustBeSpacedCorrectly-->
+    <Rule Id="SA1010" Action="None" /><!--None SA1010OpeningSquareBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1011" Action="None" /><!--SA1011ClosingSquareBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1012" Action="Error" /><!--SA1012OpeningBracesMustBeSpacedCorrectly-->
+    <Rule Id="SA1013" Action="Error" /><!--SA1013ClosingBracesMustBeSpacedCorrectly-->
+    <Rule Id="SA1014" Action="Error" /><!--SA1014OpeningGenericBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1015" Action="Error" /><!--SA1015ClosingGenericBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1016" Action="Error" /><!--SA1016OpeningAttributeBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1017" Action="Error" /><!--SA1017ClosingAttributeBracketsMustBeSpacedCorrectly-->
+    <Rule Id="SA1018" Action="Error" /><!--SA1018NullableTypeSymbolsMustNotBePrecededBySpace-->
+    <Rule Id="SA1019" Action="Error" /><!--SA1019MemberAccessSymbolsMustBeSpacedCorrectly-->
+    <Rule Id="SA1020" Action="Error" /><!--SA1020IncrementDecrementSymbolsMustBeSpacedCorrectly-->
+    <Rule Id="SA1021" Action="Error" /><!--SA1021NegativeSignsMustBeSpacedCorrectly-->
+    <Rule Id="SA1022" Action="Error" /><!--SA1022PositiveSignsMustBeSpacedCorrectly-->
+    <Rule Id="SA1023" Action="Error" /><!--SA1023DereferenceAndAccessOfMustBeSpacedCorrectly-->
+    <Rule Id="SA1024" Action="Error" /><!--SA1024ColonsMustBeSpacedCorrectly-->
+    <Rule Id="SA1025" Action="None" /><!--None SA1025CodeMustNotContainMultipleWhitespaceInARow-->
+    <Rule Id="SA1026" Action="Error" /><!--SA1026CodeMustNotContainSpaceAfterNewKeywordInImplicitlyTypedArrayAllocation-->
+    <Rule Id="SA1027" Action="Error" /><!--SA1027UseTabsCorrectly-->
+    <Rule Id="SA1028" Action="Error" /><!--SA1028CodeMustNotContainTrailingWhitespace-->
+    <Rule Id="SA1100" Action="Error" /><!--SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists-->
+    <Rule Id="SA1101" Action="None" /><!--None SA1101PrefixLocalCallsWithThis-->
+    <Rule Id="SA1102" Action="Error" /><!--SA1102QueryClausesShouldFollowPreviousClause-->
+    <Rule Id="SA1103" Action="Error" /><!--SA1103QueryClausesShouldBeOnSeparateLinesOrAllOnOneLine-->
+    <Rule Id="SA1104" Action="Error" /><!--SA1104QueryClauseShouldBeginOnNewLineWhenPreviousClauseSpansMultipleLines-->
+    <Rule Id="SA1105" Action="Error" /><!--SA1105QueryClausesSpanningMultipleLinesShouldBeginOnOwnLine-->
+    <Rule Id="SA1106" Action="Error" /><!--SA1106CodeMustNotContainEmptyStatements-->
+    <Rule Id="SA1107" Action="None" /><!--None SA1107CodeMustNotContainMultipleStatementsOnOneLine-->
+    <Rule Id="SA1108" Action="Error" /><!--SA1108BlockStatementsMustNotContainEmbeddedComments-->
+    <Rule Id="SA1109" Action="None" /><!--None intentionally omitted SA1109BlockStatementsMustNotContainEmbeddedRegions-->
+    <Rule Id="SA1110" Action="Error" /><!--SA1110OpeningParenthesisMustBeOnDeclarationLine-->
+    <Rule Id="SA1111" Action="Error" /><!--SA1111ClosingParenthesisMustBeOnLineOfLastParameter-->
+    <Rule Id="SA1112" Action="Error" /><!--SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis-->
+    <Rule Id="SA1113" Action="Error" /><!--SA1113CommaMustBeOnSameLineAsPreviousParameter-->
+    <Rule Id="SA1114" Action="Error" /><!--SA1114ParameterListMustFollowDeclaration-->
+    <Rule Id="SA1115" Action="Error" /><!--SA1115ParameterMustFollowComma-->
+    <Rule Id="SA1116" Action="Error" /><!--SA1116SplitParametersMustStartOnLineAfterDeclaration-->
+    <Rule Id="SA1117" Action="Error" /><!--SA1117ParametersMustBeOnSameLineOrSeparateLines-->
+    <Rule Id="SA1118" Action="None" /><!--None SA1118ParameterMustNotSpanMultipleLines-->
+    <Rule Id="SA1119" Action="Error" /><!--SA1119StatementMustNotUseUnnecessaryParenthesis-->
+    <Rule Id="SA1120" Action="Error" /><!--SA1120CommentsMustContainText-->
+    <Rule Id="SA1121" Action="Error" /><!--SA1121UseBuiltInTypeAlias-->
+    <Rule Id="SA1122" Action="None" /><!--None SA1122UseStringEmptyForEmptyStrings-->
+    <Rule Id="SA1123" Action="None" /><!--None SA1123DoNotPlaceRegionsWithinElements-->
+    <Rule Id="SA1124" Action="None" /><!--None SA1124DoNotUseRegions-->
+    <Rule Id="SA1125" Action="Error" /><!--SA1125UseShorthandForNullableTypes-->
+    <Rule Id="SA1126" Action="None" /><!--None intentionally omitted SA1126PrefixCallsCorrectly-->
+    <Rule Id="SA1127" Action="Error" /><!--SA1127GenericTypeConstraintsMustBeOnOwnLine-->
+    <Rule Id="SA1128" Action="Error" /><!--SA1128ConstructorInitializerMustBeOnOwnLine-->
+    <Rule Id="SA1129" Action="None" /><!--None SA1129DoNotUseDefaultValueTypeConstructor-->
+    <Rule Id="SA1130" Action="Error" /><!--SA1130UseLambdaSyntax-->
+    <Rule Id="SA1131" Action="Error" /><!--SA1131UseReadableConditions-->
+    <Rule Id="SA1132" Action="Error" /><!--SA1132DoNotCombineFields-->
+    <Rule Id="SA1133" Action="Error" /><!--SA1133DoNotCombineAttributes-->
+    <Rule Id="SA1134" Action="Error" /><!--SA1134AttributesMustNotShareLine-->
+    <Rule Id="SA1135" Action="Error" /><!--SA1135UsingDirectivesMustBeQualified-->
+    <Rule Id="SA1136" Action="Error" /><!--SA1136EnumValuesShouldBeOnSeparateLines-->
+    <Rule Id="SA1137" Action="Error" /><!--SA1137ElementsShouldHaveTheSameIndentation-->
+    <Rule Id="SA1139" Action="Error" /><!--SA1139UseLiteralsSuffixNotationInsteadOfCasting-->
+    <Rule Id="SA1141" Action="Error" /><!--SA1141UseTupleSyntax-->
+    <Rule Id="SA1142" Action="Error" /><!--SA1142ReferToTupleElementsByName-->
+    <Rule Id="SA1200" Action="None" /><!--None SA1200UsingDirectivesMustBePlacedCorrectly-->
+    <Rule Id="SA1201" Action="None" /><!--None SA1201ElementsMustAppearInTheCorrectOrder-->
+    <Rule Id="SA1202" Action="None" /><!--None SA1202ElementsMustBeOrderedByAccess-->
+    <Rule Id="SA1203" Action="None" /><!--None SA1203ConstantsMustAppearBeforeFields-->
+    <Rule Id="SA1204" Action="Error" /><!--SA1204StaticElementsMustAppearBeforeInstanceElements-->
+    <Rule Id="SA1205" Action="Error" /><!--SA1205PartialElementsMustDeclareAccess-->
+    <Rule Id="SA1206" Action="None" /><!--None SA1206DeclarationKeywordsMustFollowOrder-->
+    <Rule Id="SA1207" Action="Error" /><!--SA1207ProtectedMustComeBeforeInternal-->
+    <Rule Id="SA1208" Action="Error" /><!--SA1208SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives-->
+    <Rule Id="SA1209" Action="Error" /><!--SA1209UsingAliasDirectivesMustBePlacedAfterOtherUsingDirectives-->
+    <Rule Id="SA1210" Action="Error" /><!--SA1210UsingDirectivesMustBeOrderedAlphabeticallyByNamespace-->
+    <Rule Id="SA1211" Action="Error" /><!--SA1211UsingAliasDirectivesMustBeOrderedAlphabeticallyByAliasName-->
+    <Rule Id="SA1212" Action="Error" /><!--SA1212PropertyAccessorsMustFollowOrder-->
+    <Rule Id="SA1213" Action="Error" /><!--SA1213EventAccessorsMustFollowOrder-->
+    <Rule Id="SA1214" Action="Error" /><!--SA1214ReadonlyElementsMustAppearBeforeNonReadonlyElements-->
+    <Rule Id="SA1215" Action="None" /><!--None intentionally omitted SA1215InstanceReadonlyElementsMustAppearBeforeInstanceNonReadonlyElements-->
+    <Rule Id="SA1216" Action="Error" /><!--SA1216UsingStaticDirectivesMustBePlacedAtTheCorrectLocation-->
+    <Rule Id="SA1217" Action="Error" /><!--SA1217UsingStaticDirectivesMustBeOrderedAlphabetically-->
+    <Rule Id="SA1300" Action="Error" /><!--SA1300ElementMustBeginWithUpperCaseLetter-->
+    <Rule Id="SA1301" Action="Error" /><!--SA1301ElementMustBeginWithLowerCaseLetter-->
+    <Rule Id="SA1302" Action="Error" /><!--SA1302InterfaceNamesMustBeginWithI-->
+    <Rule Id="SA1303" Action="Error" /><!--SA1303ConstFieldNamesMustBeginWithUpperCaseLetter-->
+    <Rule Id="SA1304" Action="Error" /><!--SA1304NonPrivateReadonlyFieldsMustBeginWithUpperCaseLetter-->
+    <Rule Id="SA1305" Action="None" /><!--None SA1305FieldNamesMustNotUseHungarianNotation-->
+    <Rule Id="SA1306" Action="Error" /><!--SA1306FieldNamesMustBeginWithLowerCaseLetter-->
+    <Rule Id="SA1307" Action="Error" /><!--SA1307AccessibleFieldsMustBeginWithUpperCaseLetter-->
+    <Rule Id="SA1308" Action="Error" /><!--SA1308VariableNamesMustNotBePrefixed-->
+    <Rule Id="SA1309" Action="None" /><!--None SA1309FieldNamesMustNotBeginWithUnderscore-->
+    <Rule Id="SA1310" Action="Error" /><!--SA1310FieldNamesMustNotContainUnderscore-->
+    <Rule Id="SA1311" Action="Error" /><!--SA1311StaticReadonlyFieldsMustBeginWithUpperCaseLetter-->
+    <Rule Id="SA1312" Action="Error" /><!--SA1312VariableNamesMustBeginWithLowerCaseLetter-->
+    <Rule Id="SA1313" Action="None" /><!--None SA1313ParameterNamesMustBeginWithLowerCaseLetter-->
+    <Rule Id="SA1314" Action="Error" /><!--SA1314TypeParameterNamesMustBeginWithT-->
+    <Rule Id="SA1316" Action="None" /><!--None SA1316TupleElementNamesShouldUseCorrectCasing-->
+    <Rule Id="SA1400" Action="Error" /><!--SA1400AccessModifierMustBeDeclared-->
+    <Rule Id="SA1401" Action="Error" /><!--SA1401FieldsMustBePrivate-->
+    <Rule Id="SA1402" Action="Error" /><!--SA1402FileMayOnlyContainASingleType-->
+    <Rule Id="SA1403" Action="Error" /><!--SA1403FileMayOnlyContainASingleNamespace-->
+    <Rule Id="SA1404" Action="Error" /><!--SA1404CodeAnalysisSuppressionMustHaveJustification-->
+    <Rule Id="SA1405" Action="Error" /><!--SA1405DebugAssertMustProvideMessageText-->
+    <Rule Id="SA1406" Action="Error" /><!--SA1406DebugFailMustProvideMessageText-->
+    <Rule Id="SA1407" Action="Error" /><!--SA1407ArithmeticExpressionsMustDeclarePrecedence-->
+    <Rule Id="SA1408" Action="Error" /><!--SA1408ConditionalExpressionsMustDeclarePrecedence-->
+    <Rule Id="SA1409" Action="None" /><!--None intentionally omitted SA1409RemoveUnnecessaryCode-->
+    <Rule Id="SA1410" Action="Error" /><!--SA1410RemoveDelegateParenthesisWhenPossible-->
+    <Rule Id="SA1411" Action="Error" /><!--SA1411AttributeConstructorMustNotUseUnnecessaryParenthesis-->
+    <Rule Id="SA1412" Action="None" /><!--None SA1412StoreFilesAsUtf8-->
+    <Rule Id="SA1413" Action="None" /><!--None SA1413UseTrailingCommasInMultiLineInitializers-->
+    <Rule Id="SA1414" Action="Error" /><!--SA1414TupleTypesInSignaturesShouldHaveElementNames-->
+    <Rule Id="SA1500" Action="None" /><!--None SA1500BracesForMultiLineStatementsMustNotShareLine-->
+    <Rule Id="SA1501" Action="Error" /><!--SA1501StatementMustNotBeOnSingleLine-->
+    <Rule Id="SA1502" Action="Error" /><!--SA1502ElementMustNotBeOnSingleLine-->
+    <Rule Id="SA1503" Action="None" /><!--None SA1503BracesMustNotBeOmitted-->
+    <Rule Id="SA1504" Action="Error" /><!--SA1504AllAccessorsMustBeSingleLineOrMultiLine-->
+    <Rule Id="SA1505" Action="Error" /><!--SA1505OpeningBracesMustNotBeFollowedByBlankLine-->
+    <Rule Id="SA1506" Action="Error" /><!--SA1506ElementDocumentationHeadersMustNotBeFollowedByBlankLine-->
+    <Rule Id="SA1507" Action="Error" /><!--SA1507CodeMustNotContainMultipleBlankLinesInARow-->
+    <Rule Id="SA1508" Action="Error" /><!--SA1508ClosingBracesMustNotBePrecededByBlankLine-->
+    <Rule Id="SA1509" Action="Error" /><!--SA1509OpeningBracesMustNotBePrecededByBlankLine-->
+    <Rule Id="SA1510" Action="Error" /><!--SA1510ChainedStatementBlocksMustNotBePrecededByBlankLine-->
+    <Rule Id="SA1511" Action="Error" /><!--SA1511WhileDoFooterMustNotBePrecededByBlankLine-->
+    <Rule Id="SA1512" Action="Error" /><!--SA1512SingleLineCommentsMustNotBeFollowedByBlankLine-->
+    <Rule Id="SA1513" Action="Error" /><!--SA1513ClosingBraceMustBeFollowedByBlankLine-->
+    <Rule Id="SA1514" Action="Error" /><!--SA1514ElementDocumentationHeaderMustBePrecededByBlankLine-->
+    <Rule Id="SA1515" Action="Error" /><!--SA1515SingleLineCommentMustBePrecededByBlankLine-->
+    <Rule Id="SA1516" Action="Error" /><!--SA1516ElementsMustBeSeparatedByBlankLine-->
+    <Rule Id="SA1517" Action="Error" /><!--SA1517CodeMustNotContainBlankLinesAtStartOfFile-->
+    <Rule Id="SA1518" Action="Error" /><!--SA1518UseLineEndingsCorrectlyAtEndOfFile-->
+    <Rule Id="SA1519" Action="Error" /><!--SA1519BracesMustNotBeOmittedFromMultiLineChildStatement-->
+    <Rule Id="SA1520" Action="Error" /><!--SA1520UseBracesConsistently-->
+    <Rule Id="SA1600" Action="None" /><!--None SA1600ElementsMustBeDocumented-->
+    <Rule Id="SA1601" Action="Warning" /><!--Warning SA1601PartialElementsMustBeDocumented-->
+    <Rule Id="SA1602" Action="None" /><!--None SA1602EnumerationItemsMustBeDocumented-->
+    <Rule Id="SA1603" Action="None" /><!--None intentionally omitted SA1603DocumentationMustContainValidXml-->
+    <Rule Id="SA1604" Action="None" /><!--None SA1604ElementDocumentationMustHaveSummary-->
+    <Rule Id="SA1605" Action="None" /><!--None SA1605PartialElementDocumentationMustHaveSummary-->
+    <Rule Id="SA1606" Action="None" /><!--None SA1606ElementDocumentationMustHaveSummaryText-->
+    <Rule Id="SA1607" Action="None" /><!--None SA1607PartialElementDocumentationMustHaveSummaryText-->
+    <Rule Id="SA1608" Action="None" /><!--None SA1608ElementDocumentationMustNotHaveDefaultSummary-->
+    <Rule Id="SA1609" Action="None" /><!--None SA1609PropertyDocumentationMustHaveValue-->
+    <Rule Id="SA1610" Action="None" /><!--None SA1610PropertyDocumentationMustHaveValueText-->
+    <Rule Id="SA1611" Action="Warning" /><!--SA1611ElementParametersMustBeDocumented-->
+    <Rule Id="SA1612" Action="Warning" /><!--SA1612ElementParameterDocumentationMustMatchElementParameters-->
+    <Rule Id="SA1613" Action="Warning" /><!--SA1613ElementParameterDocumentationMustDeclareParameterName-->
+    <Rule Id="SA1614" Action="Warning" /><!--SA1614ElementParameterDocumentationMustHaveText-->
+    <Rule Id="SA1615" Action="None" /><!--None SA1615ElementReturnValueMustBeDocumented-->
+    <Rule Id="SA1616" Action="None" /><!--None SA1616ElementReturnValueDocumentationMustHaveText-->
+    <Rule Id="SA1617" Action="Error" /><!--SA1617VoidReturnValueMustNotBeDocumented-->
+    <Rule Id="SA1618" Action="Error" /><!--SA1618GenericTypeParametersMustBeDocumented-->
+    <Rule Id="SA1619" Action="Error" /><!--SA1619GenericTypeParametersMustBeDocumentedPartialClass-->
+    <Rule Id="SA1620" Action="Warning" /><!--Warning SA1620GenericTypeParameterDocumentationMustMatchTypeParameters-->
+    <Rule Id="SA1621" Action="Warning" /><!--Warning SA1621GenericTypeParameterDocumentationMustDeclareParameterName-->
+    <Rule Id="SA1622" Action="Error" /><!--SA1622GenericTypeParameterDocumentationMustHaveText-->
+    <Rule Id="SA1623" Action="None" /><!--None SA1623PropertySummaryDocumentationMustMatchAccessors-->
+    <Rule Id="SA1624" Action="None" /><!--None SA1624PropertySummaryDocumentationMustOmitSetAccessorWithRestrictedAccess-->
+    <Rule Id="SA1625" Action="None" /><!--None SA1625ElementDocumentationMustNotBeCopiedAndPasted-->
+    <Rule Id="SA1626" Action="Warning" /><!--Warning SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes-->
+    <Rule Id="SA1627" Action="Error" /><!--SA1627DocumentationTextMustNotBeEmpty-->
+    <Rule Id="SA1628" Action="None" /><!--None intentionally omitted SA1628DocumentationTextMustBeginWithACapitalLetter-->
+    <Rule Id="SA1629" Action="None" /><!--None SA1629DocumentationTextMustEndWithAPeriod-->
+    <Rule Id="SA1630" Action="None" /><!--None intentionally omitted SA1630DocumentationTextMustContainWhitespace-->
+    <Rule Id="SA1631" Action="None" /><!--None intentionally omitted SA1631DocumentationMustMeetCharacterPercentage-->
+    <Rule Id="SA1632" Action="None" /><!--None intentionally omitted SA1632DocumentationTextMustMeetMinimumCharacterLength-->
+    <Rule Id="SA1633" Action="None" /><!--None SA1633FileMustHaveHeader-->
+    <Rule Id="SA1634" Action="None" /><!--None SA1634FileHeaderMustShowCopyright-->
+    <Rule Id="SA1635" Action="None" /><!--None SA1635FileHeaderMustHaveCopyrightText-->
+    <Rule Id="SA1636" Action="None" /><!--None SA1636FileHeaderCopyrightTextMustMatch-->
+    <Rule Id="SA1637" Action="None" /><!--None SA1637FileHeaderMustContainFileName-->
+    <Rule Id="SA1638" Action="None" /><!--None SA1638FileHeaderFileNameDocumentationMustMatchFileName-->
+    <Rule Id="SA1639" Action="None" /><!--None SA1639FileHeaderMustHaveSummary-->
+    <Rule Id="SA1640" Action="None" /><!--None SA1640FileHeaderMustHaveValidCompanyText-->
+    <Rule Id="SA1641" Action="None" /><!--None SA1641FileHeaderCompanyNameTextMustMatch-->
+    <Rule Id="SA1642" Action="None" /><!--None SA1642ConstructorSummaryDocumentationMustBeginWithStandardText-->
+    <Rule Id="SA1643" Action="None" /><!--None SA1643DestructorSummaryDocumentationMustBeginWithStandardText-->
+    <Rule Id="SA1644" Action="None" /><!--None intentionally omitted SA1644DocumentationHeadersMustNotContainBlankLines-->
+    <Rule Id="SA1645" Action="None" /><!--None intentionally omitted SA1645IncludedDocumentationFileDoesNotExist-->
+    <Rule Id="SA1646" Action="None" /><!--None intentionally omitted SA1646IncludedDocumentationXPathDoesNotExist-->
+    <Rule Id="SA1647" Action="None" /><!--None intentionally omitted SA1647IncludeNodeDoesNotContainValidFileAndPath-->
+    <Rule Id="SA1648" Action="None" /><!--None SA1648InheritDocMustBeUsedWithInheritingClass-->
+    <Rule Id="SA1649" Action="Error" /><!--SA1649FileNameMustMatchTypeName-->
+    <Rule Id="SA1650" Action="None" /><!--None intentionally omitted SA1650ElementDocumentationMustBeSpelledCorrectly-->
+    <Rule Id="SA1651" Action="Error" /><!--SA1651DoNotUsePlaceholderElements-->
+    <Rule Id="SA1652" Action="None" /><!--None moved to SA0001 SA1652EnableXmlDocumentationOutput-->
+    <Rule Id="SX1101" Action="Error" /><!--SX1101DoNotPrefixLocalMembersWithThis-->
+    <Rule Id="SX1309" Action="Error" /><!--SX1309FieldNamesMustBeginWithUnderscore-->
+    <Rule Id="SX1309S" Action="Error" /><!--SX1309SStaticFieldNamesMustBeginWithUnderscore-->
+  </Rules>
+  <Rules AnalyzerId="Roslynator.CSharp.Analyzers" RuleNamespace="Roslynator.CSharp.Analyzers">
+    <!--Documentation source:-->
+    <!-- https://github.com/JosefPihrt/Roslynator/blob/main/docs/analyzers -->
+    <Rule Id="RCS0011" Action="Error" /><!--RCS0011: Add/remove blank line between single-line accessors-->
+    <!--roslynator_blank_line_between_single_line_accessors=true|false-->
+    <Rule Id="RCS0014" Action="Error" /><!--RCS0014: Add blank line between switch sections-->
+    <Rule Id="RCS0015" Action="Error" /><!--RCS0015: Add/remove blank line between using directives-->
+    <!--roslynator_blank_line_between_using_directives = never|separate_groups-->
+    <Rule Id="RCS0016" Action="Error" /><!--RCS0016: Put attribute list on its own line-->
+    <Rule Id="RCS0020" Action="Error" /><!--RCS0020: Format accessor's braces on a single line or multiple lines-->
+    <!--roslynator_accessor_braces_style = multi_line|single_line_when_expression_is_on_single_line-->
+    <Rule Id="RCS0021" Action="Error" /><!--RCS0021: Format block's braces on a single line or multiple lines-->
+    <!--roslynator_block_braces_style = multi_line|single_line_when_empty-->
+    <Rule Id="RCS0022" Action="None" /><!--deprecated RCS0022: Add new line after opening brace of empty block-->
+    <Rule Id="RCS0023" Action="Error" /><!--RCS0023: Format type declaration's braces-->
+    <Rule Id="RCS0025" Action="Error" /><!--RCS0025: Put full accessor on its own line-->
+    <Rule Id="RCS0027" Action="Error" /><!--RCS0027: Place new line after/before binary operator-->
+    <!--roslynator_binary_operator_new_line = after|before-->
+    <Rule Id="RCS0028" Action="Error" /><!--RCS0028: Place new line after/before '?:' operator-->
+    <!--roslynator_conditional_operator_new_line = after|before-->
+    <Rule Id="RCS0029" Action="Error" /><!--RCS0029: Put constructor initializer on its own line-->
+    <Rule Id="RCS0031" Action="Error" /><!--RCS0031: Put enum member on its own line-->
+    <Rule Id="RCS0032" Action="Error" /><!--RCS0032: Place new line after/before arrow token-->
+    <!--roslynator_arrow_token_new_line = after|before-->
+    <Rule Id="RCS0033" Action="Error" /><!--RCS0033: Add new line before statement-->
+    <Rule Id="RCS0034" Action="Error" /><!--RCS0034: Put type parameter constraint on its own line-->
+    <Rule Id="RCS0036" Action="None" /><!--None RCS0036: Remove blank line between single-line declarations of same kind-->
+    <Rule Id="RCS0039" Action="None" /><!--None RCS0039: Remove new line before base list-->
+    <Rule Id="RCS0041" Action="Error" /><!--RCS0041: Remove new line between 'if' keyword and 'else' keyword-->
+    <Rule Id="RCS0042" Action="Error" /><!--RCS0042: Put auto-accessors on a single line-->
+    <Rule Id="RCS0043" Action="None" /><!--None RCS0043: Format accessor's braces on a single line when expression is on single line-->
+    <Rule Id="RCS0044" Action="None" /><!--None RCS0044: Use carriage return + linefeed as new line (\r\n)-->
+    <Rule Id="RCS0045" Action="None" /><!--None RCS0045: Use linefeed as new line (\n)-->
+    <Rule Id="RCS0046" Action="Error" /><!--RCS0046: Use spaces instead of tab-->
+    <Rule Id="RCS0048" Action="None" /><!--None RCS0048: Put initializer on a single line-->
+    <Rule Id="RCS0049" Action="None" /><!--None RCS0049: Add blank line after top comment-->
+    <Rule Id="RCS0050" Action="Error" /><!--RCS0050: Add blank line before top declaration-->
+    <Rule Id="RCS0051" Action="Error" /><!--RCS0051: Add/remove new line before 'while' in 'do' statement-->
+    <!--roslynator_new_line_before_while_in_do_statement = true|false-->
+    <Rule Id="RCS0052" Action="Error" /><!--RCS0052: Place new line after/before equals token-->
+    <!--roslynator_equals_token_new_line = after|before-->
+    <!----><Rule Id="RCS0053" Action="None" /><!--RCS0053: Fix formatting of a list-->
+    <!----><Rule Id="RCS0054" Action="None" /><!--RCS0054: Fix formatting of a call chain-->
+    <Rule Id="RCS0055" Action="None" /><!--None RCS0055: Fix formatting of a binary expression chain-->
+    <Rule Id="RCS0056" Action="None" /><!--None RCS0056: A line is too long-->
+    <!--roslynator_max_line_length={NUM}-->
+    <Rule Id="RCS0057" Action="Error" /><!--RCS0057: Normalize whitespace at the beginning of a file-->
+    <Rule Id="RCS0058" Action="Error" /><!--RCS0058: Normalize whitespace at the end of a file-->
+    <!--roslynator_new_line_at_end_of_file = true|false-->
+    <Rule Id="RCS0059" Action="Error" /><!--RCS0059: Place new line after/before null-conditional operator-->
+    <!--roslynator_null_conditional_operator_new_line = after|before-->
+    <Rule Id="RCS0060" Action="Error" /><!--RCS0060: Add/remove line after file scoped namespace declaration-->
+    <!--roslynator_blank_line_after_file_scoped_namespace_declaration = true|false-->
+    <Rule Id="RCS0061" Action="Error" /><!--RCS0061: Add/remove blank line between switch sections-->
+    <!--roslynator_blank_line_between_switch_sections = include|omit|omit_after_block-->
+    <Rule Id="RCS1001" Action="Error" /><!--RCS1001: Add braces (when expression spans over multiple lines)-->
+    <Rule Id="RCS1002" Action="None" /><!--None RCS1002: Remove braces (invert RCS1007)-->
+    <Rule Id="RCS1003" Action="Error" /><!--RCS1003: Add braces to if-else (when expression spans over multiple lines)-->
+    <Rule Id="RCS1004" Action="None" /><!--None RCS1004: Remove braces from if-else (invert RCS1003)-->
+    <Rule Id="RCS1005" Action="Error" /><!--RCS1005: Simplify nested using statement-->
+    <Rule Id="RCS1006" Action="Error" /><!--RCS1006: Merge 'else' with nested 'if'-->
+    <Rule Id="RCS1007" Action="Error" /><!--RCS1007: Add braces (invert RCS1002)-->
+    <Rule Id="RCS1008" Action="None" /><!--None RCS1008 (Obsolete. Use RCS1264 instead): Use explicit type instead of 'var' (when the type is not obvious) -->
+    <Rule Id="RCS1009" Action="None" /><!--None RCS1009 (Obsolete. Use RCS1264 instead): Use explicit type instead of 'var' (foreach variable)-->
+    <Rule Id="RCS1010" Action="None" /><!--None RCS1010 (Obsolete. Use RCS1264 instead): Use 'var' instead of explicit type (when the type is obvious, invert RCS1012)-->
+    <Rule Id="RCS1012" Action="None" /><!--None RCS1012 (Obsolete. Use RCS1264 instead): Use explicit type instead of 'var' (when the type is obvious, invert RCS1010)-->
+    <Rule Id="RCS1013" Action="Error" /><!--RCS1013: Use predefined type-->
+    <Rule Id="RCS1014" Action="Error" /><!--RCS1014: Use explicitly/implicitly typed array-->
+    <!--roslynator_array_creation_type_style = explicit|implicit|implicit_when_type_is_obvious-->
+    <Rule Id="RCS1015" Action="Error" /><!--RCS1015: Use nameof operatory-->
+    <Rule Id="RCS1016" Action="Error" /><!--RCS1016: Use block body or expression body-->
+    <!--roslynator_body_style = block|expression-->
+    <!--roslynator_use_block_body_when_declaration_spans_over_multiple_lines = true|false-->
+    <!--roslynator_use_block_body_when_expression_spans_over_multiple_lines = true|false-->
+    <Rule Id="RCS1018" Action="Error" /><!--RCS1018: Add/remove accessibility modifiers-->
+    <!--roslynator_accessibility_modifiers = explicit|implicit-->
+    <Rule Id="RCS1019" Action="Error" /><!--RCS1019: Order modifiers-->
+    <Rule Id="RCS1020" Action="Error" /><!--RCS1020: Simplify Nullable<T> to T?-->
+    <Rule Id="RCS1021" Action="Error" /><!--RCS1021: Convert lambda expression body to expression body-->
+    <Rule Id="RCS1031" Action="Error" /><!--RCS1031: Remove unnecessary braces in switch section-->
+    <Rule Id="RCS1032" Action="Error" /><!--RCS1032: Remove redundant parentheses-->
+    <Rule Id="RCS1033" Action="Error" /><!--RCS1033: Remove redundant boolean literal-->
+    <Rule Id="RCS1034" Action="Error" /><!--RCS1034: Remove redundant 'sealed' modifier-->
+    <Rule Id="RCS1035" Action="None" /><!--None RCS1035 (Obsolete. Use RCS1260 instead): Remove redundant comma in initializer-->
+    <Rule Id="RCS1036" Action="Error" /><!--RCS1036: Remove unnecessary blank line-->
+    <Rule Id="RCS1037" Action="Error" /><!--RCS1037: Remove trailing white-space-->
+    <Rule Id="RCS1038" Action="Error" /><!--RCS1038: Remove empty statement-->
+    <Rule Id="RCS1039" Action="Error" /><!--RCS1039: Remove argument list from attribute-->
+    <Rule Id="RCS1040" Action="Error" /><!--RCS1040: Remove empty 'else' clause-->
+    <Rule Id="RCS1041" Action="Error" /><!--RCS1041: Remove empty initializer-->
+    <Rule Id="RCS1042" Action="Error" /><!--RCS1042: Remove enum default underlying type-->
+    <Rule Id="RCS1043" Action="Error" /><!--RCS1043: Remove 'partial' modifier from type with a single part-->
+    <Rule Id="RCS1044" Action="Error" /><!--RCS1044: Remove original exception from throw statement-->
+    <Rule Id="RCS1046" Action="Error" /><!--RCS1046: Asynchronous method name should end with 'Async'-->
+    <Rule Id="RCS1047" Action="Error" /><!--RCS1047: Non-asynchronous method name should not end with 'Async'-->
+    <Rule Id="RCS1048" Action="Error" /><!--RCS1048: Use lambda expression instead of anonymous method-->
+    <Rule Id="RCS1049" Action="Error" /><!--RCS1049: Simplify boolean comparison-->
+    <Rule Id="RCS1050" Action="Error" /><!--RCS1050: Include/omit parentheses when creating new object-->
+    <!--roslynator_object_creation_parentheses_style = include|omit-->
+    <Rule Id="RCS1051" Action="Error" /><!--RCS1051: Add/remove parentheses from condition in conditional operator-->
+    <!--roslynator_conditional_operator_condition_parentheses_style = include|omit|omit_when_condition_is_single_token-->
+    <!--roslynator.RCS1051.do_not_parenthesize_single_token = true-->
+    <Rule Id="RCS1052" Action="Error" /><!--RCS1052: Declare each attribute separately-->
+    <Rule Id="RCS1055" Action="Error" /><!--RCS1055: Avoid semicolon at the end of declaration-->
+    <Rule Id="RCS1056" Action="None" /><!--None RCS1056: Avoid usage of using alias directive-->
+    <Rule Id="RCS1058" Action="Error" /><!--RCS1058: Use compound assignment-->
+    <Rule Id="RCS1059" Action="Error" /><!--RCS1059: Avoid locking on publicly accessible instance-->
+    <Rule Id="RCS1060" Action="Error" /><!--RCS1060: Declare each type in separate file-->
+    <Rule Id="RCS1061" Action="Error" /><!--RCS1061: Merge 'if' with nested 'if'-->
+    <Rule Id="RCS1066" Action="Error" /><!--RCS1066: Remove empty 'finally' clause-->
+    <Rule Id="RCS1068" Action="Error" /><!--RCS1068: Simplify logical negation-->
+    <Rule Id="RCS1069" Action="Error" /><!--RCS1069: Remove unnecessary case label-->
+    <Rule Id="RCS1070" Action="Error" /><!--RCS1070: Remove redundant default switch section-->
+    <Rule Id="RCS1071" Action="Error" /><!--RCS1071: Remove redundant base constructor call-->
+    <Rule Id="RCS1072" Action="Error" /><!--RCS1072: Remove empty namespace declaration-->
+    <Rule Id="RCS1073" Action="Error" /><!--RCS1073: Convert 'if' to 'return' statement-->
+    <Rule Id="RCS1074" Action="Error" /><!--RCS1074: Remove redundant constructor-->
+    <Rule Id="RCS1075" Action="Error" /><!--RCS1075: Avoid empty catch clause that catches System.Exception-->
+    <Rule Id="RCS1077" Action="Error" /><!--RCS1077: Optimize LINQ method call-->
+    <Rule Id="RCS1078" Action="Error" /><!--RCS1078: Use "" or 'string.Empty'-->
+    <!--roslynator_empty_string_style = field|literal-->
+    <Rule Id="RCS1079" Action="Warning" /><!--Warning|None RCS1079: Throwing of new NotImplementedException-->
+    <Rule Id="RCS1080" Action="Error" /><!--RCS1080: Use 'Count/Length' property instead of 'Any' method-->
+    <Rule Id="RCS1081" Action="Error" /><!--RCS1081: Split variable declaration-->
+    <Rule Id="RCS1084" Action="Error" /><!--RCS1084: Use coalesce expression instead of conditional expression-->
+    <Rule Id="RCS1085" Action="Error" /><!--RCS1085: Use auto-implemented property-->
+    <Rule Id="RCS1089" Action="Error" /><!--RCS1089: Use ++ (or minus-minus) operator instead of assignment-->
+    <Rule Id="RCS1090" Action="Warning" /><!--Warning|None|Error RCS1090: Add/remove 'ConfigureAwait(false)' call-->
+    <Rule Id="RCS1091" Action="Error" /><!--RCS1091: Remove empty region-->
+    <Rule Id="RCS1093" Action="Error" /><!--RCS1093: Remove file with no code-->
+    <Rule Id="RCS1094" Action="None" /><!--None RCS1094: Declare using directive on top level-->
+    <Rule Id="RCS1096" Action="Error" /><!--RCS1096: Use 'HasFlag' method or bitwise operator-->
+    <!--roslynator_enum_has_flag_style = method|operator-->
+    <Rule Id="RCS1097" Action="Error" /><!--RCS1097: Remove redundant 'ToString' call-->
+    <Rule Id="RCS1098" Action="Error" /><!--RCS1098: Constant values should be placed on right side of comparisons-->
+    <Rule Id="RCS1099" Action="Error" /><!--RCS1099: Default label should be the last label in a switch section-->
+    <Rule Id="RCS1102" Action="Warning" /><!--Warning|None RCS1102: Make class static-->
+    <Rule Id="RCS1103" Action="Error" /><!--RCS1103: Convert 'if' to assignment-->
+    <Rule Id="RCS1104" Action="Error" /><!--RCS1104: Simplify conditional expression-->
+    <Rule Id="RCS1105" Action="Error" /><!--RCS1105: Unnecessary interpolation-->
+    <Rule Id="RCS1106" Action="Error" /><!--RCS1106: Remove empty destructor-->
+    <Rule Id="RCS1107" Action="Error" /><!--RCS1107: Remove redundant 'ToCharArray' call-->
+    <Rule Id="RCS1108" Action="Error" /><!--RCS1108: Add 'static' modifier to all partial class declarations-->
+    <Rule Id="RCS1110" Action="Error" /><!--RCS1110: Declare type inside namespace-->
+    <Rule Id="RCS1111" Action="None" /><!--None RCS1111: Add braces to switch section with multiple statements-->
+    <Rule Id="RCS1112" Action="None" /><!--None RCS1112: Combine 'Enumerable.Where' method chain-->
+    <Rule Id="RCS1113" Action="Error" /><!--RCS1113: Use 'string.IsNullOrEmpty' method-->
+    <Rule Id="RCS1114" Action="Error" /><!--RCS1114: Remove redundant delegate creation-->
+    <Rule Id="RCS1118" Action="Error" /><!--RCS1118: Mark local variable as const-->
+    <Rule Id="RCS1123" Action="Error" /><!--RCS1123: Add parentheses when necessary-->
+    <Rule Id="RCS1124" Action="Warning" /><!--Warning|None|Error RCS1124: Inline local variable-->
+    <Rule Id="RCS1126" Action="None" /><!--RCS1126: Add braces to if-else-->
+    <Rule Id="RCS1128" Action="Error" /><!--RCS1128: Use coalesce expression-->
+    <Rule Id="RCS1129" Action="Error" /><!--RCS1129: Remove redundant field initialization-->
+    <Rule Id="RCS1130" Action="Error" /><!--RCS1130: Bitwise operation on enum without Flags attribute-->
+    <Rule Id="RCS1132" Action="Error" /><!--RCS1132: Remove redundant overriding member-->
+    <Rule Id="RCS1133" Action="Error" /><!--RCS1133: Remove redundant Dispose/Close call-->
+    <Rule Id="RCS1134" Action="Error" /><!--RCS1134: Remove redundant statement-->
+    <Rule Id="RCS1135" Action="None" /><!--None|Warning RCS1135: Declare enum member with zero value (when enum has FlagsAttribute)-->
+    <Rule Id="RCS1136" Action="Error" /><!--RCS1136: Merge switch sections with equivalent content-->
+    <Rule Id="RCS1138" Action="Error" /><!--RCS1138: Add summary to documentation comment-->
+    <Rule Id="RCS1139" Action="Error" /><!--RCS1139: Add summary element to documentation comment-->
+    <Rule Id="RCS1140" Action="Error" /><!--RCS1140: Add exception to documentation comment-->
+    <Rule Id="RCS1141" Action="Error" /><!--RCS1141: Add 'param' element to documentation comment-->
+    <Rule Id="RCS1142" Action="Error" /><!--RCS1142: Add 'typeparam' element to documentation comment-->
+    <Rule Id="RCS1143" Action="Error" /><!--RCS1143: Simplify coalesce expression-->
+    <Rule Id="RCS1145" Action="Error" /><!--RCS1145: Remove redundant 'as' operator-->
+    <Rule Id="RCS1146" Action="Error" /><!--RCS1146: Use conditional access-->
+    <Rule Id="RCS1151" Action="Error" /><!--RCS1151: Remove redundant cast-->
+    <Rule Id="RCS1154" Action="Error" /><!--RCS1154: Sort enum members-->
+    <Rule Id="RCS1155" Action="Error" /><!--RCS1155: Use StringComparison when comparing strings-->
+    <Rule Id="RCS1156" Action="Error" /><!--RCS1156: Use string.Length instead of comparison with empty string-->
+    <Rule Id="RCS1157" Action="Error" /><!--Error|None RCS1157: Composite enum value contains undefined flag-->
+    <Rule Id="RCS1158" Action="Error" /><!--RCS1158: Static member in generic type should use a type parameter-->
+    <Rule Id="RCS1159" Action="Error" /><!--RCS1159: Use EventHandler<T>-->
+    <Rule Id="RCS1160" Action="Error" /><!--RCS1160: Abstract type should not have public constructors-->
+    <Rule Id="RCS1161" Action="Error" /><!--RCS1161: Enum should declare explicit values-->
+    <Rule Id="RCS1162" Action="None" /><!--None RCS1162: Avoid chain of assignments-->
+    <Rule Id="RCS1163" Action="Error" /><!--RCS1163: Unused parameter-->
+    <Rule Id="RCS1164" Action="Error" /><!--RCS1164: Unused type parameter-->
+    <Rule Id="RCS1165" Action="Error" /><!--RCS1165: Unconstrained type parameter checked for null-->
+    <Rule Id="RCS1166" Action="Error" /><!--RCS1166: Value type object is never equal to null-->
+    <Rule Id="RCS1168" Action="None" /><!--None RCS1168: Parameter name differs from base name-->
+    <Rule Id="RCS1169" Action="Error" /><!--RCS1169: Make field read-only-->
+    <Rule Id="RCS1170" Action="Error" /><!--RCS1170: Use read-only auto-implemented property-->
+    <Rule Id="RCS1171" Action="Error" /><!--RCS1171: Simplify lazy initialization-->
+    <Rule Id="RCS1172" Action="Error" /><!--RCS1172: Use 'is' operator instead of 'as' operator-->
+    <Rule Id="RCS1173" Action="Error" /><!--RCS1173: Use coalesce expression instead of 'if'-->
+    <Rule Id="RCS1174" Action="Error" /><!--RCS1174: Remove redundant async/await-->
+    <Rule Id="RCS1175" Action="Error" /><!--RCS1175: Unused 'this' parameter-->
+    <Rule Id="RCS1176" Action="Error" /><!--RCS1176: Use 'var' instead of explicit type (when the type is not obvious)-->
+    <Rule Id="RCS1177" Action="Error" /><!--RCS1177: Use 'var' instead of explicit type (in foreach)-->
+    <Rule Id="RCS1179" Action="Error" /><!--RCS1179: Unnecessary assignment-->
+    <Rule Id="RCS1180" Action="Error" /><!--RCS1180: Inline lazy initialization-->
+    <Rule Id="RCS1181" Action="Error" /><!--RCS1181: Convert comment to documentation comment-->
+    <Rule Id="RCS1182" Action="Error" /><!--RCS1182: Remove redundant base interface-->
+    <Rule Id="RCS1186" Action="Error" /><!--RCS1186: Use Regex instance instead of static method-->
+    <Rule Id="RCS1187" Action="Error" /><!--RCS1187: Use constant instead of field-->
+    <Rule Id="RCS1188" Action="Error" /><!--RCS1188: Remove redundant auto-property initialization-->
+    <Rule Id="RCS1189" Action="Error" /><!--RCS1189: Add or remove region name-->
+    <Rule Id="RCS1190" Action="Error" /><!--RCS1190: Join string expressions-->
+    <Rule Id="RCS1191" Action="Error" /><!--RCS1191: Declare enum value as combination of names-->
+    <Rule Id="RCS1192" Action="Error" /><!--RCS1192: Unnecessary usage of verbatim string literal-->
+    <Rule Id="RCS1193" Action="Error" /><!--RCS1193: Overriding member should not change 'params' modifier-->
+    <Rule Id="RCS1194" Action="Error" /><!--RCS1194: Implement exception constructors-->
+    <Rule Id="RCS1195" Action="Error" /><!--RCS1195: Use ^ operator-->
+    <Rule Id="RCS1196" Action="Error" /><!--RCS1196: Call extension method as instance method-->
+    <Rule Id="RCS1197" Action="Error" /><!--RCS1197: Optimize StringBuilder.Append/AppendLine call-->
+    <Rule Id="RCS1198" Action="None" /><!--None RCS1198: Avoid unnecessary boxing of value type-->
+    <Rule Id="RCS1199" Action="Error" /><!--RCS1199: Unnecessary null check-->
+    <Rule Id="RCS1200" Action="Error" /><!--RCS1200: Call 'Enumerable.ThenBy' instead of 'Enumerable.OrderBy'-->
+    <Rule Id="RCS1201" Action="Error" /><!--RCS1201: Use method chaining-->
+    <Rule Id="RCS1202" Action="Error" /><!--RCS1202: Avoid NullReferenceException-->
+    <Rule Id="RCS1203" Action="Error" /><!--RCS1203: Use AttributeUsageAttribute-->
+    <Rule Id="RCS1204" Action="Error" /><!--RCS1204: Use EventArgs.Empty-->
+    <Rule Id="RCS1205" Action="Error" /><!--RCS1205: Order named arguments according to the order of parameters-->
+    <Rule Id="RCS1206" Action="Error" /><!--RCS1206: Use conditional access instead of conditional expression-->
+    <Rule Id="RCS1207" Action="Error" /><!--RCS1207: Use anonymous function or method group-->
+    <!--roslynator_use_anonymous_function_or_method_group = anonymous_function|method_group-->
+    <Rule Id="RCS1208" Action="Error" /><!--RCS1208: Reduce 'if' nesting-->
+    <Rule Id="RCS1209" Action="Error" /><!--RCS1209: Order type parameter constraints-->
+    <Rule Id="RCS1210" Action="Error" /><!--RCS1210: Return completed task instead of returning null-->
+    <Rule Id="RCS1211" Action="Error" /><!--RCS1211: Remove unnecessary 'else'-->
+    <Rule Id="RCS1212" Action="Error" /><!--RCS1212: Remove redundant assignment-->
+    <Rule Id="RCS1213" Action="Error" /><!--RCS1213: Remove unused member declaration-->
+    <!--roslynator_suppress_unity_script_methods = true|false-->
+    <Rule Id="RCS1214" Action="Error" /><!--RCS1214: Unnecessary interpolated string-->
+    <Rule Id="RCS1215" Action="Warning" /><!--Warning RCS1215: Expression is always equal to true/false-->
+    <Rule Id="RCS1216" Action="Error" /><!--RCS1216: Unnecessary unsafe context-->
+    <Rule Id="RCS1217" Action="Error" /><!--RCS1217: Convert interpolated string to concatenation-->
+    <Rule Id="RCS1218" Action="Error" /><!--RCS1218: Simplify code branching-->
+    <Rule Id="RCS1220" Action="Error" /><!--RCS1220: Use pattern matching instead of combination of 'is' operator and cast operator-->
+    <Rule Id="RCS1221" Action="Error" /><!--RCS1221: Use pattern matching instead of combination of 'as' operator and null check-->
+    <Rule Id="RCS1222" Action="Error" /><!--RCS1222: Merge preprocessor directives-->
+    <Rule Id="RCS1223" Action="None" /><!--None RCS1223: Mark publicly visible type with DebuggerDisplay attribute-->
+    <Rule Id="RCS1224" Action="Error" /><!--RCS1224: Make method an extension method-->
+    <Rule Id="RCS1225" Action="Error" /><!--RCS1225: Make class sealed-->
+    <Rule Id="RCS1226" Action="Error" /><!--RCS1226: Add paragraph to documentation comment-->
+    <Rule Id="RCS1227" Action="Error" /><!--RCS1227: Validate arguments correctly-->
+    <Rule Id="RCS1228" Action="Error" /><!--RCS1228: Unused element in documentation comment-->
+    <Rule Id="RCS1229" Action="Error" /><!--RCS1229: Use async/await when necessary-->
+    <Rule Id="RCS1230" Action="Error" /><!--RCS1230: Unnecessary explicit use of enumerator-->
+    <Rule Id="RCS1231" Action="None" /><!--None RCS1231: Make parameter ref read-only-->
+    <Rule Id="RCS1232" Action="Error" /><!--RCS1232: Order elements in documentation comment-->
+    <Rule Id="RCS1233" Action="Error" /><!--RCS1233: Use short-circuiting operator-->
+    <Rule Id="RCS1234" Action="Error" /><!--RCS1234: Duplicate enum value-->
+    <Rule Id="RCS1235" Action="Error" /><!--RCS1235: Optimize method call-->
+    <Rule Id="RCS1236" Action="Error" /><!--RCS1236: Use exception filter-->
+    <Rule Id="RCS1238" Action="Error" /><!--None|Error RCS1238: Avoid nested ?: operators-->
+    <Rule Id="RCS1239" Action="Error" /><!--RCS1239: Use 'for' statement instead of 'while' statement-->
+    <Rule Id="RCS1240" Action="Error" /><!--RCS1240: Operator is unnecessary-->
+    <Rule Id="RCS1241" Action="Error" /><!--RCS1241: Implement non-generic counterpart-->
+    <Rule Id="RCS1242" Action="Error" /><!--RCS1242: Do not pass non-read-only struct by read-only reference-->
+    <Rule Id="RCS1243" Action="Error" /><!--RCS1243: Duplicate word in a comment-->
+    <Rule Id="RCS1244" Action="Error" /><!--RCS1244: Simplify 'default' expression-->
+    <Rule Id="RCS1246" Action="Error" /><!--RCS1246: Use element access-->
+    <!--roslynator.RCS1246.suppress_when_expression_is_invocation = true|false-->
+    <Rule Id="RCS1247" Action="Error" /><!--RCS1247: Fix documentation comment tag-->
+    <Rule Id="RCS1248" Action="Error" /><!--Error|None RCS1248: Normalize null check-->
+    <!--roslynator_null_check_style = equality_operator|pattern_matching-->
+    <Rule Id="RCS1249" Action="Error" /><!--RCS1249: Unnecessary null-forgiving operator-->
+    <Rule Id="RCS1250" Action="Error" /><!--RCS1250: Use implicit/explicit object creation-->
+    <!--roslynator_object_creation_type_style = explicit|implicit|implicit_when_type_is_obvious-->
+    <!--roslynator_use_var_instead_of_implicit_object_creation = true|false-->
+    <Rule Id="RCS1251" Action="Error" /><!--RCS1251: Remove unnecessary braces from record declaration-->
+    <Rule Id="RCS1252" Action="Error" /><!--RCS1252: Normalize usage of infinite loop-->
+    <!--roslynator_infinite_loop_style = for|while-->
+    <Rule Id="RCS1253" Action="Error" /><!--RCS1253: Format documentation comment summary-->
+    <!--roslynator_doc_comment_summary_style = multi_line|single_line-->
+    <Rule Id="RCS1254" Action="Error" /><!--RCS1254: Normalize format of enum flag value-->
+    <!--roslynator_enum_flag_value_style = decimal_number|shift_operator-->
+    <Rule Id="RCS1255" Action="Error" /><!--RCS1255: Simplify argument null check-->
+    <Rule Id="RCS1256" Action="Error" /><!--RCS1256: Invalid argument null check-->
+    <Rule Id="RCS1260" Action="Error" /><!--RCS1260: Add/remove trailing comma-->
+    <!--roslynator_trailing_comma_style = include|omit|omit_when_single_line-->
+    <Rule Id="RCS1264" Action="Error" /><!--RCS1264: Use 'var' or explicit type-->
+    <!--roslynator_use_var = always|never|when_type_is_obvious-->
+    <Rule Id="RCS9001" Action="Error" /><!--RCS9001: Use pattern matching-->
+    <Rule Id="RCS9002" Action="Error" /><!--RCS9002: Use property SyntaxNode.SpanStart-->
+    <Rule Id="RCS9003" Action="Error" /><!--RCS9003: Unnecessary conditional access-->
+    <Rule Id="RCS9004" Action="None" /><!--None RCS9004: Call 'Any' instead of accessing 'Count'-->
+    <Rule Id="RCS9005" Action="Error" /><!--RCS9005: Unnecessary null check-->
+    <Rule Id="RCS9006" Action="Error" /><!--RCS9006: Use element access-->
+    <Rule Id="RCS9007" Action="Error" /><!--RCS9007: Use return value-->
+    <Rule Id="RCS9008" Action="Error" /><!--RCS9008: Call 'Last' instead of using []-->
+    <Rule Id="RCS9009" Action="Error" /><!--RCS9009: Unknown language name-->
+    <Rule Id="RCS9010" Action="Error" /><!--RCS9010: Specify ExportCodeRefactoringProviderAttribute.Name-->
+    <Rule Id="RCS9011" Action="Error" /><!--RCS9011: Specify ExportCodeFixProviderAttribute.Name-->
+  </Rules>
+</RuleSet>

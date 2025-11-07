@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Lab5_CostAccounting.Service;
 using LogSaveService;
 using Npgsql;
 using NpgsqlTypes;
@@ -19,7 +20,7 @@ namespace Lab5_CostAccounting
             {
                 // 1. Парсинг Txt
                 transactions = ExportService.ParseFile("../../../../Tasks/Lab5/transactions.txt");
-                SimpleLogger.Info($"Прочитано {transactions.Count} записей из CSV.");
+                SimpleLogger.Info($"Прочитано {transactions.Count} записей из txt.");
             }
             catch (Exception ex)
             {
