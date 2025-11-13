@@ -16,5 +16,11 @@ namespace Lab6_InventoryManager.Entities
         public int Quantity { get; set; }
 
         public DateTime When { get; set; }
+
+        public Product? Product { get; set; }
+
+        public Warehouse? FromWarehouse { get; set; }
+
+        public Warehouse? ToWarehouse { get; set; }
     }
 }
