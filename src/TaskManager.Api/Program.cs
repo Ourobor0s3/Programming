@@ -1,19 +1,32 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TaskManager.Api.Services;
-using TaskManager.Api.Services.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-    });
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
+// register singleton in-memory service
 builder.Services.AddSingleton<ITaskService, TaskService>();
+builder.Services.AddSingleton<TaskService>(sp => (TaskService)sp.GetRequiredService<ITaskService>());
 
 var app = builder.Build();
 
-app.UseRouting();
-app.MapControllers();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
 
-app.Run("http://localhost:5065");
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapRazorPages();
+
+app.Run();

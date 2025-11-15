@@ -1,0 +1,110 @@
+﻿@page
+@model TaskManager.Api.Pages.IndexModel
+@{
+    ViewData["Title"] = "Список задач";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Задачи</h2>
+    <div>
+        <button type="button" class="btn btn-info me-2" onclick="exportTasks()">
+            📥 Экспорт в JSON
+        </button>
+        <a asp-page="/Create" class="btn btn-primary">
+            ➕ Создать задачу
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model.Tasks == null || Model.Tasks.Count == 0)
+{
+    <div class="alert alert-info">
+        <strong>📋</strong> Задач пока нет. <a asp-page="/Create" class="alert-link">Создайте первую задачу</a>
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Заголовок</th>
+            <th>Описание</th>
+            <th>Срок выполнения</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var t in Model.Tasks)
+        {
+            <tr>
+                <td>@t.Id</td>
+                <td>@t.Title</td>
+                <td>@t.Description</td>
+                <td>@t.DueDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@(t.IsDone ? "Выполнено" : "Открыта")</td>
+                <td>
+                    <div class="d-flex gap-1">
+                        <a asp-page="/Edit" asp-route-id="@t.Id" class="btn btn-sm btn-warning">
+                            ✏️ Изменить
+                        </a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@t.Id" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить задачу \"@t.Title\"?');">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                🗑️ Удалить
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        async function exportTasks() {
+            try {
+                const response = await fetch('/api/tasks/export');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Создаем blob и скачиваем файл
+                    const blob = new Blob([JSON.stringify(data.tasks, null, 2)], { type: 'application/json' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'tasks_export.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    // Показываем сообщение об успехе
+                    alert('Экспорт выполнен успешно! Файл tasks_export.json скачан.');
+                } else {
+                    const error = await response.json();
+                    alert('Ошибка при экспорте: ' + (error.error || 'Неизвестная ошибка'));
+                }
+            } catch (error) {
+                alert('Ошибка при экспорте: ' + error.message);
+            }
+        }
+    </script>
+}
