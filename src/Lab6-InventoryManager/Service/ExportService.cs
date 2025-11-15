@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
 using System.Xml.Serialization;
+using System.Xml.Xsl;
 using Lab6_InventoryManager.Entities;
 
 namespace Lab6_InventoryManager.Service
@@ -83,11 +85,40 @@ namespace Lab6_InventoryManager.Service
             File.WriteAllText(filePath, json, Encoding.UTF8);
         }
 
-        public static void ExportToXml<T>(List<T> list, string filePath)
+        public static string ExportToXml<T>(List<T> list, string filePath)
         {
             var serializer = new XmlSerializer(typeof(List<T>));
-            using var writer = new StreamWriter(filePath, false, Encoding.UTF8);
+            using var stringWriter = new StringWriter();
+            using var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                Indent = true,
+                OmitXmlDeclaration = false
+            });
+
             serializer.Serialize(writer, list);
+            return stringWriter.ToString();
+        }
+
+        // Генерация HTML через XSLT
+        public static string GenerateHtmlReport(string xmlContent, string xsltPath = "inventory.xslt")
+        {
+            if (!File.Exists(xsltPath))
+                throw new FileNotFoundException($"XSLT file not found: {xsltPath}");
+
+            var xslt = new XslCompiledTransform();
+            using var xsltReader = XmlReader.Create(xsltPath);
+            xslt.Load(xsltReader);
+
+            using var xmlReader = new StringReader(xmlContent);
+            using var input = XmlReader.Create(xmlReader);
+
+            using var ms = new MemoryStream();
+            using var writer = XmlWriter.Create(ms, xslt.OutputSettings);
+            xslt.Transform(input, writer);
+            ms.Position = 0;
+
+            return Encoding.UTF8.GetString(ms.ToArray());
         }
     }
 }

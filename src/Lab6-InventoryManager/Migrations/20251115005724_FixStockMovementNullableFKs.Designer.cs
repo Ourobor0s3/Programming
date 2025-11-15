@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lab6_InventoryManager.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20251107230142_Initial")]
-    partial class Initial
+    [Migration("20251115005724_FixStockMovementNullableFKs")]
+    partial class FixStockMovementNullableFKs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,10 @@ namespace Lab6_InventoryManager.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FromWarehouseId")
+                    b.Property<int?>("FromWarehouseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FromWarehouseId1")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProductCode")
@@ -63,10 +66,16 @@ namespace Lab6_InventoryManager.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("ProductCode1")
+                        .HasColumnType("character varying(50)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ToWarehouseId")
+                    b.Property<int?>("ToWarehouseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ToWarehouseId1")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("When")
@@ -76,9 +85,15 @@ namespace Lab6_InventoryManager.Migrations
 
                     b.HasIndex("FromWarehouseId");
 
+                    b.HasIndex("FromWarehouseId1");
+
                     b.HasIndex("ProductCode");
 
+                    b.HasIndex("ProductCode1");
+
                     b.HasIndex("ToWarehouseId");
+
+                    b.HasIndex("ToWarehouseId1");
 
                     b.ToTable("StockMovements");
                 });
@@ -105,8 +120,11 @@ namespace Lab6_InventoryManager.Migrations
                     b.HasOne("Lab6_InventoryManager.Entities.Warehouse", null)
                         .WithMany()
                         .HasForeignKey("FromWarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Lab6_InventoryManager.Entities.Warehouse", "FromWarehouse")
+                        .WithMany()
+                        .HasForeignKey("FromWarehouseId1");
 
                     b.HasOne("Lab6_InventoryManager.Entities.Product", null)
                         .WithMany()
@@ -114,11 +132,24 @@ namespace Lab6_InventoryManager.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Lab6_InventoryManager.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductCode1");
+
                     b.HasOne("Lab6_InventoryManager.Entities.Warehouse", null)
                         .WithMany()
                         .HasForeignKey("ToWarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Lab6_InventoryManager.Entities.Warehouse", "ToWarehouse")
+                        .WithMany()
+                        .HasForeignKey("ToWarehouseId1");
+
+                    b.Navigation("FromWarehouse");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ToWarehouse");
                 });
 #pragma warning restore 612, 618
         }

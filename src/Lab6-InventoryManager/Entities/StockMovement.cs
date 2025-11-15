@@ -9,9 +9,9 @@ namespace Lab6_InventoryManager.Entities
 
         public string? ProductCode { get; set; }
 
-        public int FromWarehouseId { get; set; }
+        public int? FromWarehouseId { get; set; }
 
-        public int ToWarehouseId { get; set; }
+        public int? ToWarehouseId { get; set; }
 
         public int Quantity { get; set; }
 

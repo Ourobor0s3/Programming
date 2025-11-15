@@ -13,6 +13,8 @@ namespace Lab6_InventoryManager
 
         public DbSet<Warehouse> Warehouses { get; set; }
 
+        public DbSet<PriceHistory> PriceHistory { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -40,6 +42,18 @@ namespace Lab6_InventoryManager
                 entity.Property(w => w.Name).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<PriceHistory>(entity =>
+            {
+                entity.HasKey(ph => ph.Id);
+                entity.Property(ph => ph.ProductCode).IsRequired().HasMaxLength(50);
+                entity.Property(ph => ph.OldPrice).HasColumnType("decimal(10,2)").IsRequired();
+                entity.Property(ph => ph.NewPrice).HasColumnType("decimal(10,2)").IsRequired();
+                entity.Property(ph => ph.ChangedAt).IsRequired();
+                entity.Property(ph => ph.Reason).HasMaxLength(200);
+
+                entity.HasIndex(ph => new { ph.ProductCode, ph.ChangedAt });
+            });
+
             // Настройка StockMovement
             modelBuilder.Entity<StockMovement>(entity =>
             {
@@ -57,12 +71,14 @@ namespace Lab6_InventoryManager
                 entity.HasOne<Warehouse>()
                     .WithMany()
                     .HasForeignKey(sm => sm.FromWarehouseId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
 
                 entity.HasOne<Warehouse>()
                     .WithMany()
                     .HasForeignKey(sm => sm.ToWarehouseId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
             });
         }
     }

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lab6_InventoryManager.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class FixStockMovementNullableFKs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,10 +46,13 @@ namespace Lab6_InventoryManager.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProductCode = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    FromWarehouseId = table.Column<int>(type: "integer", nullable: false),
-                    ToWarehouseId = table.Column<int>(type: "integer", nullable: false),
+                    FromWarehouseId = table.Column<int>(type: "integer", nullable: true),
+                    ToWarehouseId = table.Column<int>(type: "integer", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    When = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    When = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProductCode1 = table.Column<string>(type: "character varying(50)", nullable: true),
+                    FromWarehouseId1 = table.Column<int>(type: "integer", nullable: true),
+                    ToWarehouseId1 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,17 +64,32 @@ namespace Lab6_InventoryManager.Migrations
                         principalColumn: "ProductCode",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_StockMovements_Products_ProductCode1",
+                        column: x => x.ProductCode1,
+                        principalTable: "Products",
+                        principalColumn: "ProductCode");
+                    table.ForeignKey(
                         name: "FK_StockMovements_Warehouses_FromWarehouseId",
                         column: x => x.FromWarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_StockMovements_Warehouses_FromWarehouseId1",
+                        column: x => x.FromWarehouseId1,
+                        principalTable: "Warehouses",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_StockMovements_Warehouses_ToWarehouseId",
                         column: x => x.ToWarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StockMovements_Warehouses_ToWarehouseId1",
+                        column: x => x.ToWarehouseId1,
+                        principalTable: "Warehouses",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -80,14 +98,29 @@ namespace Lab6_InventoryManager.Migrations
                 column: "FromWarehouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StockMovements_FromWarehouseId1",
+                table: "StockMovements",
+                column: "FromWarehouseId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockMovements_ProductCode",
                 table: "StockMovements",
                 column: "ProductCode");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StockMovements_ProductCode1",
+                table: "StockMovements",
+                column: "ProductCode1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockMovements_ToWarehouseId",
                 table: "StockMovements",
                 column: "ToWarehouseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockMovements_ToWarehouseId1",
+                table: "StockMovements",
+                column: "ToWarehouseId1");
         }
 
         /// <inheritdoc />

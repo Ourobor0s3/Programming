@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Lab6_InventoryManager.Service
 {
@@ -34,7 +35,8 @@ namespace Lab6_InventoryManager.Service
                     ), 0) AS Quantity
                 FROM Warehouses w
                 CROSS JOIN Products p
-                LEFT JOIN StockMovements sm ON sm.ProductCode = p.ProductCode
+                LEFT JOIN StockMovements sm 
+                    ON sm.ProductCode = p.ProductCode
                 GROUP BY w.Id, w.Name, p.ProductCode, p.Name
                 HAVING COALESCE(SUM(
                         CASE WHEN sm.ToWarehouseId = w.Id THEN sm.Quantity ELSE 0 END -
@@ -44,19 +46,33 @@ namespace Lab6_InventoryManager.Service
 
             var result = new List<WarehouseStock>();
 
-            await using var connection = new Npgsql.NpgsqlConnection(_connectionString);
+            await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
-            await using var cmd = new Npgsql.NpgsqlCommand(sql, connection);
+            await using var cmd = new NpgsqlCommand(sql, connection);
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
+                var warehouseId = reader.GetInt32(reader.GetOrdinal("WarehouseId"));
+                var warehouseName = reader.IsDBNull("WarehouseName")
+                    ? string.Empty
+                    : reader.GetString("WarehouseName");
+
+                var productCode = reader.GetString("ProductCode");
+                var productName = reader.IsDBNull("ProductName")
+                    ? string.Empty
+                    : reader.GetString("ProductName");
+
+                var quantity = reader.IsDBNull("Quantity")
+                    ? 0
+                    : reader.GetInt32("Quantity");
+
                 result.Add(new WarehouseStock(
-                    reader.GetInt32("WarehouseId"),
-                    reader.GetString("WarehouseName"),
-                    reader.GetString("ProductCode"),
-                    reader.GetString("ProductName"),
-                    reader.GetInt32("Quantity")));
+                    warehouseId,
+                    warehouseName,
+                    productCode,
+                    productName,
+                    quantity));
             }
 
             return result;
