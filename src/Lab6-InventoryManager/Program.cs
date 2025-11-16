@@ -222,8 +222,8 @@ namespace Lab6_InventoryManager
                 var data = await svc.GetWarehouseStocksAsync();
 
                 ExportService.ExportToJson(data, "inventory.json");
-                var xml = ExportService.ExportToXml(data, "inventory.xml");
-                ExportService.GenerateHtmlReport(xml, "inventory.html");
+                ExportService.ExportToXml(data, "inventory.xml");
+                ExportService.GenerateHtmlReport(data, "inventory.html");
                 SimpleLogger.Info("Отчёты сохранены: report.xml, report.json, report.html");
             }
             catch (Exception ex)

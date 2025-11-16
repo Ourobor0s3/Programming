@@ -25,24 +25,24 @@ namespace Lab6_InventoryManager.Service
         {
             const string sql = @"
                 SELECT
-                    w.Id AS WarehouseId,
-                    w.Name AS WarehouseName,
-                    p.ProductCode,
-                    p.Name AS ProductName,
+                    w.""Id"" AS WarehouseId,
+                    w.""Name"" AS WarehouseName,
+                    p.""ProductCode"",
+                    p.""Name"" AS ProductName,
                     COALESCE(SUM(
-                        CASE WHEN sm.ToWarehouseId = w.Id THEN sm.Quantity ELSE 0 END -
-                        CASE WHEN sm.FromWarehouseId = w.Id THEN sm.Quantity ELSE 0 END
-                    ), 0) AS Quantity
-                FROM Warehouses w
-                CROSS JOIN Products p
-                LEFT JOIN StockMovements sm 
-                    ON sm.ProductCode = p.ProductCode
-                GROUP BY w.Id, w.Name, p.ProductCode, p.Name
+                                     CASE WHEN sm.""ToWarehouseId"" = w.""Id"" THEN sm.""Quantity"" ELSE 0 END -
+                                     CASE WHEN sm.""FromWarehouseId"" = w.""Id"" THEN sm.""Quantity"" ELSE 0 END
+                             ), 0) AS Quantity
+                FROM ""Warehouses"" as w
+                         CROSS JOIN ""Products"" as p
+                         LEFT JOIN ""StockMovements"" as sm
+                                   ON sm.""ProductCode"" = p.""ProductCode""
+                GROUP BY w.""Id"", w.""Name"", p.""ProductCode"", p.""Name""
                 HAVING COALESCE(SUM(
-                        CASE WHEN sm.ToWarehouseId = w.Id THEN sm.Quantity ELSE 0 END -
-                        CASE WHEN sm.FromWarehouseId = w.Id THEN sm.Quantity ELSE 0 END
-                    ), 0) <> 0
-                ORDER BY w.Id, p.ProductCode;";
+                                        CASE WHEN sm.""ToWarehouseId"" = w.""Id"" THEN sm.""Quantity"" ELSE 0 END -
+                                        CASE WHEN sm.""FromWarehouseId"" = w.""Id"" THEN sm.""Quantity"" ELSE 0 END
+                                ), 0) <> 0
+                ORDER BY w.""Id"", p.""ProductCode"";";
 
             var result = new List<WarehouseStock>();
 

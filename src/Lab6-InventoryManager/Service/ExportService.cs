@@ -85,40 +85,73 @@ namespace Lab6_InventoryManager.Service
             File.WriteAllText(filePath, json, Encoding.UTF8);
         }
 
-        public static string ExportToXml<T>(List<T> list, string filePath)
+        public static void ExportToXml<T>(List<T> list, string filePath)
         {
             var serializer = new XmlSerializer(typeof(List<T>));
-            using var stringWriter = new StringWriter();
-            using var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings
-            {
-                Encoding = Encoding.UTF8,
-                Indent = true,
-                OmitXmlDeclaration = false
-            });
-
+            using var writer = new StreamWriter(filePath, false, Encoding.UTF8);
             serializer.Serialize(writer, list);
-            return stringWriter.ToString();
         }
 
-        // Генерация HTML через XSLT
-        public static string GenerateHtmlReport(string xmlContent, string xsltPath = "inventory.xslt")
+        public static void GenerateHtmlReport<T>(List<T> stocks, string xsltPath = "inventory.xslt")
         {
+            if (stocks == null)
+                throw new ArgumentNullException(nameof(stocks));
+
+            if (string.IsNullOrWhiteSpace(xsltPath))
+                throw new ArgumentException("XSLT path cannot be null or empty.", nameof(xsltPath));
+
             if (!File.Exists(xsltPath))
-                throw new FileNotFoundException($"XSLT file not found: {xsltPath}");
+                throw new FileNotFoundException($"XSLT file not found: {Path.GetFullPath(xsltPath)}", xsltPath);
 
-            var xslt = new XslCompiledTransform();
-            using var xsltReader = XmlReader.Create(xsltPath);
-            xslt.Load(xsltReader);
+            try
+            {
+                // 1. Сериализуем List<WarehouseStock> в XML-строку
+                var xmlSerializer = new XmlSerializer(typeof(List<T>));
+                var xmlContent = new StringWriter();
+                xmlSerializer.Serialize(xmlContent, stocks);
+                var xmlString = xmlContent.ToString();
 
-            using var xmlReader = new StringReader(xmlContent);
-            using var input = XmlReader.Create(xmlReader);
+                // 2. Загружаем XSLT
+                var xslt = new XslCompiledTransform();
+                var settings = new XsltSettings { EnableDocumentFunction = false, EnableScript = false };
+                xslt.Load(xsltPath, settings, new XmlUrlResolver());
 
-            using var ms = new MemoryStream();
-            using var writer = XmlWriter.Create(ms, xslt.OutputSettings);
-            xslt.Transform(input, writer);
-            ms.Position = 0;
+                // 3. Настройки вывода (гарантируем UTF-8)
+                var outputSettings = xslt.OutputSettings?.Clone() ?? new XmlWriterSettings
+                {
+                    Encoding = Encoding.UTF8,
+                    OmitXmlDeclaration = true,
+                    Indent = true,
+                    IndentChars = "  ",
+                    NewLineChars = "\n",
+                    ConformanceLevel = ConformanceLevel.Auto
+                };
+                outputSettings.Encoding = Encoding.UTF8;
 
-            return Encoding.UTF8.GetString(ms.ToArray());
+                // 4. Трансформация
+                using var xmlReader = XmlReader.Create(new StringReader(xmlString));
+                using var ms = new MemoryStream();
+                using var writer = XmlWriter.Create(ms, outputSettings);
+
+                xslt.Transform(xmlReader, writer);
+                writer.Flush();
+
+                ms.Position = 0;
+                new StreamReader(ms, Encoding.UTF8).ReadToEnd();
+                return;
+            }
+            catch (XsltException ex)
+            {
+                throw new InvalidOperationException($"Ошибка в XSLT-файле '{xsltPath}': {ex.Message}", ex);
+            }
+            catch (InvalidOperationException ex) when (ex.InnerException is XmlException)
+            {
+                throw new InvalidOperationException($"Ошибка сериализации данных в XML: {ex.InnerException.Message}", ex);
+            }
+            catch (Exception ex) when (ex is not ArgumentException && ex is not ArgumentNullException && ex is not FileNotFoundException)
+            {
+                throw new InvalidOperationException($"Не удалось сгенерировать HTML-отчёт: {ex.Message}", ex);
+            }
         }
     }
 }
