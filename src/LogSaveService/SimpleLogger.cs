@@ -1,13 +1,16 @@
-﻿namespace LogSaveService;
+﻿using System.Diagnostics;
+
+namespace LogSaveService;
 
 public static class SimpleLogger
 {
     private static readonly object _lock = new();
-    private const string LogDir = "logs";
+    private const string LogDir = @"..\..\..\..\logs";
     private static string LogFile => Path.Combine(LogDir, $"app-{DateTime.Now:yyyy-MM-dd}.log");
 
     static SimpleLogger()
     {
+        var res = Process.GetCurrentProcess().MainModule;
         Directory.CreateDirectory(LogDir);
     }
 
