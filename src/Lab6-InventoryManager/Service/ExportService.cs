@@ -92,65 +92,86 @@ namespace Lab6_InventoryManager.Service
             serializer.Serialize(writer, list);
         }
 
-        public static void GenerateHtmlReport<T>(List<T> stocks, string xsltPath = "inventory.xslt")
+        public static void GenerateHtmlReportFromXml(
+            string xmlPath = "inventory.xml",
+            string outputPath = "inventory.html")
         {
-            if (stocks == null)
-                throw new ArgumentNullException(nameof(stocks));
+            if (string.IsNullOrWhiteSpace(xmlPath))
+                throw new ArgumentException("XML path cannot be empty.", nameof(xmlPath));
 
-            if (string.IsNullOrWhiteSpace(xsltPath))
-                throw new ArgumentException("XSLT path cannot be null or empty.", nameof(xsltPath));
-
-            if (!File.Exists(xsltPath))
-                throw new FileNotFoundException($"XSLT file not found: {Path.GetFullPath(xsltPath)}", xsltPath);
+            if (!File.Exists(xmlPath))
+                throw new FileNotFoundException($"XML file not found: {Path.GetFullPath(xmlPath)}", xmlPath);
 
             try
             {
-                // 1. Сериализуем List<WarehouseStock> в XML-строку
-                var xmlSerializer = new XmlSerializer(typeof(List<T>));
-                var xmlContent = new StringWriter();
-                xmlSerializer.Serialize(xmlContent, stocks);
-                var xmlString = xmlContent.ToString();
+                // 1) Загружаем XML
+                var xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlPath);
 
-                // 2. Загружаем XSLT
-                var xslt = new XslCompiledTransform();
-                var settings = new XsltSettings { EnableDocumentFunction = false, EnableScript = false };
-                xslt.Load(xsltPath, settings, new XmlUrlResolver());
+                var rootNode = xmlDoc.DocumentElement;
+                if (rootNode == null)
+                    throw new InvalidOperationException("XML не содержит корневого элемента.");
 
-                // 3. Настройки вывода (гарантируем UTF-8)
-                var outputSettings = xslt.OutputSettings?.Clone() ?? new XmlWriterSettings
+                // 2) Определяем список полей автоматически по первой записи
+                var firstNode = rootNode.ChildNodes.Cast<XmlNode>().FirstOrDefault();
+                if (firstNode == null)
+                    throw new InvalidOperationException("XML не содержит данных.");
+
+                var columnNames = firstNode.ChildNodes
+                    .Cast<XmlNode>()
+                    .Select(n => n.Name)
+                    .ToList();
+
+                // 3) Генерируем HTML
+                var sb = new StringBuilder();
+
+                sb.AppendLine("<html>");
+                sb.AppendLine("<head>");
+                sb.AppendLine("<meta charset=\"UTF-8\" />");
+                sb.AppendLine("<title>Inventory Report</title>");
+                sb.AppendLine("<style>");
+                sb.AppendLine("table { border-collapse: collapse; width: 100%; }");
+                sb.AppendLine("th, td { border: 1px solid #ccc; padding: 6px; }");
+                sb.AppendLine("th { background: #eee; }");
+                sb.AppendLine("</style>");
+                sb.AppendLine("</head>");
+                sb.AppendLine("<body>");
+                sb.AppendLine("<h2>Inventory Report</h2>");
+                sb.AppendLine("<table>");
+
+                // Заголовок
+                sb.AppendLine("<tr>");
+                foreach (var col in columnNames)
+                    sb.AppendLine($"<th>{col}</th>");
+                sb.AppendLine("</tr>");
+
+                // Данные
+                foreach (XmlNode itemNode in rootNode.ChildNodes)
                 {
-                    Encoding = Encoding.UTF8,
-                    OmitXmlDeclaration = true,
-                    Indent = true,
-                    IndentChars = "  ",
-                    NewLineChars = "\n",
-                    ConformanceLevel = ConformanceLevel.Auto
-                };
-                outputSettings.Encoding = Encoding.UTF8;
+                    sb.AppendLine("<tr>");
+                    foreach (var col in columnNames)
+                    {
+                        var val = itemNode[col]?.InnerText ?? "";
+                        sb.AppendLine($"<td>{val}</td>");
+                    }
 
-                // 4. Трансформация
-                using var xmlReader = XmlReader.Create(new StringReader(xmlString));
-                using var ms = new MemoryStream();
-                using var writer = XmlWriter.Create(ms, outputSettings);
+                    sb.AppendLine("</tr>");
+                }
 
-                xslt.Transform(xmlReader, writer);
-                writer.Flush();
+                sb.AppendLine("</table>");
+                sb.AppendLine("</body>");
+                sb.AppendLine("</html>");
 
-                ms.Position = 0;
-                new StreamReader(ms, Encoding.UTF8).ReadToEnd();
-                return;
+                // 4) Сохраняем HTML
+                var outDir = Path.GetDirectoryName(outputPath);
+                if (!string.IsNullOrEmpty(outDir) && !Directory.Exists(outDir))
+                    Directory.CreateDirectory(outDir);
+
+                File.WriteAllText(outputPath, sb.ToString(), Encoding.UTF8);
             }
-            catch (XsltException ex)
+            catch (Exception ex)
             {
-                throw new InvalidOperationException($"Ошибка в XSLT-файле '{xsltPath}': {ex.Message}", ex);
-            }
-            catch (InvalidOperationException ex) when (ex.InnerException is XmlException)
-            {
-                throw new InvalidOperationException($"Ошибка сериализации данных в XML: {ex.InnerException.Message}", ex);
-            }
-            catch (Exception ex) when (ex is not ArgumentException && ex is not ArgumentNullException && ex is not FileNotFoundException)
-            {
-                throw new InvalidOperationException($"Не удалось сгенерировать HTML-отчёт: {ex.Message}", ex);
+                throw new InvalidOperationException($"Ошибка генерации HTML: {ex.Message}", ex);
             }
         }
     }

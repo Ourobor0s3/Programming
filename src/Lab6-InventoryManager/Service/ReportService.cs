@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Lab6_InventoryManager.Entities;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -12,14 +13,6 @@ namespace Lab6_InventoryManager.Service
         {
             _connectionString = context.Database.GetConnectionString()!;
         }
-
-        // DTO для отчёта
-        public record WarehouseStock(
-            int WarehouseId,
-            string WarehouseName,
-            string ProductCode,
-            string ProductName,
-            int Quantity);
 
         public async Task<List<WarehouseStock>> GetWarehouseStocksAsync()
         {

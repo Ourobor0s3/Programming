@@ -1,0 +1,12 @@
+[2025-11-22 09:35:47] ERROR: Ошибка генерации: Lab6_InventoryManager.Service.ReportService.WarehouseStock cannot be serialized because it does not have a parameterless constructor.
+[2025-11-22 09:37:00] ERROR: Ошибка генерации: Lab6_InventoryManager.Service.ReportService.WarehouseStock cannot be serialized because it does not have a parameterless constructor.
+[2025-11-22 09:43:42] ERROR: Ошибка генерации: Тип Lab6_InventoryManager.Service.ReportService+WarehouseStock не имеет публичного конструктора без параметров — XmlSerializer может не справиться.
+[2025-11-22 09:45:57] ERROR: Ошибка генерации: Ошибка в XSLT-файле 'inventory.xml': Stylesheet must start either with an 'xsl:stylesheet' or an 'xsl:transform' element, or with a literal result element that has an 'xsl:version' attribute, where prefix 'xsl' denotes the 'http://www.w3.org/1999/XSL/Transform' namespace.
+[2025-11-22 09:45:57] ERROR: Inner: Stylesheet must start either with an 'xsl:stylesheet' or an 'xsl:transform' element, or with a literal result element that has an 'xsl:version' attribute, where prefix 'xsl' denotes the 'http://www.w3.org/1999/XSL/Transform' namespace.
+[2025-11-22 09:46:27] ERROR: Ошибка генерации: Ошибка в XSLT-файле 'inventory.xml': Stylesheet must start either with an 'xsl:stylesheet' or an 'xsl:transform' element, or with a literal result element that has an 'xsl:version' attribute, where prefix 'xsl' denotes the 'http://www.w3.org/1999/XSL/Transform' namespace.
+[2025-11-22 09:46:27] ERROR: Inner: Stylesheet must start either with an 'xsl:stylesheet' or an 'xsl:transform' element, or with a literal result element that has an 'xsl:version' attribute, where prefix 'xsl' denotes the 'http://www.w3.org/1999/XSL/Transform' namespace.
+[2025-11-22 09:49:59] INFO: Отчёты сохранены: report.xml, report.json, report.html
+[2025-11-22 09:50:28] INFO: Прочитано 1 записей из CSV.
+[2025-11-22 09:50:28] INFO: Успешно обработано 1 записей (вставлено/обновлено) в таблицу Products.
+[2025-11-22 09:50:29] INFO: Экспорт в JSON и XML завершён успешно.
+[2025-11-22 09:50:50] INFO: Отчёты сохранены: report.xml, report.json, report.html

@@ -223,7 +223,7 @@ namespace Lab6_InventoryManager
 
                 ExportService.ExportToJson(data, "inventory.json");
                 ExportService.ExportToXml(data, "inventory.xml");
-                ExportService.GenerateHtmlReport(data, "inventory.html");
+                ExportService.GenerateHtmlReportFromXml();
                 SimpleLogger.Info("Отчёты сохранены: report.xml, report.json, report.html");
             }
             catch (Exception ex)
