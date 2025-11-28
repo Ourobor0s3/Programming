@@ -5,7 +5,7 @@ namespace Lab8
     internal static class RaceConditionDemo
     {
         private static int _counter;
-        private static object _lock = new object();
+        private static Lock _lock = new Lock();
 
         public static void Run1()
         {
@@ -25,7 +25,7 @@ namespace Lab8
             {
                 RunUnsafeIncrement(threadCount, maxCount, showSteps),
                 RunLockIncrement(threadCount, maxCount, showSteps),
-                RunInterlockedIncrement(threadCount, maxCount, showSteps)
+                RunInterlockedIncrement(threadCount, maxCount, showSteps),
             };
 
             SimpleLogger.Info("Результаты:");
