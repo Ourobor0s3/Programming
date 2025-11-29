@@ -38,8 +38,16 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        // Нормализуем Description (если пустая строка, делаем null)
+        if (string.IsNullOrWhiteSpace(TaskItem.Description))
+        {
+            TaskItem.Description = null;
+        }
+
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("Валидация не прошла. Ошибки: {Errors}", 
+                string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
             return Page();
         }
 
@@ -57,8 +65,8 @@ public class EditModel : PageModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при обновлении задачи id={Id}", TaskItem.Id);
-            ModelState.AddModelError("", "Ошибка при обновлении задачи. Попробуйте еще раз.");
+            _logger.LogError(ex, "Ошибка при обновлении задачи id={Id}: {Message}", TaskItem.Id, ex.Message);
+            ModelState.AddModelError("", $"Ошибка при обновлении задачи: {ex.Message}");
             return Page();
         }
     }

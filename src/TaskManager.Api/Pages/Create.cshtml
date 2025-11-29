@@ -10,7 +10,7 @@
         <hr />
 
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
             <div class="mb-3">
                 <label asp-for="TaskItem.Title" class="form-label">Название <span class="text-danger">*</span></label>
@@ -26,7 +26,8 @@
 
             <div class="mb-3">
                 <label asp-for="TaskItem.DueDate" class="form-label">Срок выполнения</label>
-                <input asp-for="TaskItem.DueDate" type="datetime-local" class="form-control" value="@Model.TaskItem.DueDate.ToString("yyyy-MM-ddTHH:mm")" />
+                <input asp-for="TaskItem.DueDate" type="datetime-local" class="form-control" 
+                       value="@(Model.TaskItem.DueDate != default(DateTime) ? Model.TaskItem.DueDate.ToString("yyyy-MM-ddTHH:mm") : DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm"))" />
                 <span asp-validation-for="TaskItem.DueDate" class="text-danger"></span>
             </div>
 

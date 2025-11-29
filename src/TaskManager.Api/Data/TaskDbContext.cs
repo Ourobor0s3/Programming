@@ -37,7 +37,8 @@ public class TaskDbContext : DbContext
 
         task.Property<DateTime>("CreatedAt")
             .HasColumnType("timestamp with time zone")
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .ValueGeneratedOnAdd();
     }
 }
 

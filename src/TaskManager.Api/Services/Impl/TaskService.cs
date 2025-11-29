@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TaskManager.Api.Data;
 using TaskManager.Api.Models;
 
@@ -27,7 +28,18 @@ namespace TaskManager.Api.Services.Impl
         public async Task<TaskItem> CreateAsync(TaskItem task)
         {
             task.Id = 0;
-            _dbContext.Tasks.Add(task);
+            
+            // Убеждаемся, что DueDate в UTC для PostgreSQL timestamp with time zone
+            if (task.DueDate.Kind != DateTimeKind.Utc)
+            {
+                task.DueDate = task.DueDate.ToUniversalTime();
+            }
+            
+            var entry = _dbContext.Tasks.Add(task);
+            
+            // Убеждаемся, что CreatedAt не устанавливается вручную (используется значение по умолчанию из БД)
+            entry.Property("CreatedAt").IsModified = false;
+            
             await _dbContext.SaveChangesAsync();
             return task;
         }
@@ -36,11 +48,22 @@ namespace TaskManager.Api.Services.Impl
         {
             var existing = await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
             if (existing == null) throw new InvalidOperationException($"Task with id {task.Id} not found.");
-            // Пример — копируем поля; измените по модели
+            
+            // Копируем поля
             existing.Title = task.Title;
             existing.Description = task.Description;
             existing.IsDone = task.IsDone;
-            existing.DueDate = task.DueDate;
+            
+            // Убеждаемся, что DueDate в UTC для PostgreSQL timestamp with time zone
+            if (task.DueDate.Kind != DateTimeKind.Utc)
+            {
+                existing.DueDate = task.DueDate.ToUniversalTime();
+            }
+            else
+            {
+                existing.DueDate = task.DueDate;
+            }
+            
             await _dbContext.SaveChangesAsync();
             return existing;
         }
