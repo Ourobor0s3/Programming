@@ -95,7 +95,7 @@ Content-Type: application/json
   "title": "Новая задача",
   "description": "Описание задачи",
   "isDone": false,
-  "dueDate": "2024-12-01T10:00:00Z"
+  "dueDate": "2025-12-01T10:00:00Z"
 }
 ```
 
@@ -109,7 +109,7 @@ Content-Type: application/json
   "title": "Обновленная задача",
   "description": "Новое описание",
   "isDone": true,
-  "dueDate": "2024-12-01T10:00:00Z"
+  "dueDate": "2025-12-01T10:00:00Z"
 }
 ```
 

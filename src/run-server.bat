@@ -1,7 +1,5 @@
 ﻿@echo off
-echo ========================================
 echo Запуск TaskManager API Server
-echo ========================================
 echo.
 
 cd /d "%~dp0TaskManager.Api"
