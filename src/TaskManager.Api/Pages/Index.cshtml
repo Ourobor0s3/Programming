@@ -1,12 +1,37 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Список задач";
+    ViewData["Title"] = Model.IsSearchMode ? "Поиск задач" : "Список задач";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Список задач</h1>
+    <h1>@(Model.IsSearchMode ? "Поиск задач" : "Список задач")</h1>
     <a asp-page="/Create" class="btn btn-primary">Создать задачу</a>
+</div>
+
+<!-- Форма поиска -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-8">
+                <input type="text" name="q" class="form-control" placeholder="Введите название или описание задачи..." 
+                       value="@Model.SearchQuery" />
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="pageSize" class="form-control" placeholder="Размер страницы" 
+                       value="@Model.PageSize" min="1" max="100" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Поиск</button>
+            </div>
+        </form>
+        @if (Model.IsSearchMode)
+        {
+            <div class="mt-2">
+                <a asp-page="/Index" class="btn btn-sm btn-outline-secondary">Показать все задачи</a>
+            </div>
+        }
+    </div>
 </div>
 
 @if (TempData["SuccessMessage"] != null)
@@ -25,10 +50,30 @@
     </div>
 }
 
+@if (Model.IsSearchMode && Model.SearchResult != null)
+{
+    <div class="alert alert-info">
+        Найдено задач: <strong>@Model.SearchResult.TotalCount</strong>
+        @if (Model.SearchResult.TotalCount > 0)
+        {
+            <span> (страница @Model.SearchResult.Page из @Model.SearchResult.TotalPages)</span>
+        }
+    </div>
+}
+
 @if (Model.Tasks.Count == 0)
 {
     <div class="alert alert-info">
-        <p class="mb-0">Задач пока нет. <a asp-page="/Create">Создайте первую задачу</a></p>
+        <p class="mb-0">
+            @if (Model.IsSearchMode)
+            {
+                <text>По запросу "@Model.SearchQuery" ничего не найдено.</text>
+            }
+            else
+            {
+                <text>Задач пока нет. <a asp-page="/Create">Создайте первую задачу</a></text>
+            }
+        </p>
     </div>
 }
 else
@@ -74,4 +119,48 @@ else
             </tbody>
         </table>
     </div>
+
+    <!-- Пагинация для результатов поиска -->
+    @if (Model.IsSearchMode && Model.SearchResult != null && Model.SearchResult.TotalPages > 1)
+    {
+        <div class="text-center text-muted mb-2">
+            Страница @Model.SearchResult.Page из @Model.SearchResult.TotalPages
+        </div>
+        <nav aria-label="Навигация по страницам">
+            <ul class="pagination justify-content-center">
+                @if (Model.SearchResult.Page > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Index" asp-route-q="@Model.SearchQuery" asp-route-pageNumber="@(Model.SearchResult.Page - 1)" asp-route-pageSize="@Model.PageSize">Предыдущая</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">Предыдущая</span>
+                    </li>
+                }
+
+                @for (int i = Math.Max(1, Model.SearchResult.Page - 2); i <= Math.Min(Model.SearchResult.TotalPages, Model.SearchResult.Page + 2); i++)
+                {
+                    <li class="page-item @(i == Model.SearchResult.Page ? "active" : "")">
+                        <a class="page-link" asp-page="/Index" asp-route-q="@Model.SearchQuery" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize">@i</a>
+                    </li>
+                }
+
+                @if (Model.SearchResult.Page < Model.SearchResult.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Index" asp-route-q="@Model.SearchQuery" asp-route-pageNumber="@(Model.SearchResult.Page + 1)" asp-route-pageSize="@Model.PageSize">Следующая</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">Следующая</span>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
 }

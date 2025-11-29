@@ -17,12 +17,31 @@ public class IndexModel : PageModel
     }
 
     public List<TaskItem> Tasks { get; set; } = new();
+    public SearchResultDto? SearchResult { get; set; }
+    public string? SearchQuery { get; set; }
+    public int CurrentPage { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+    public bool IsSearchMode => !string.IsNullOrWhiteSpace(SearchQuery);
 
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(string? q = null, int pageNumber = 1, int pageSize = 10)
     {
         try
         {
-            Tasks = await _taskService.GetAllAsync();
+            SearchQuery = q;
+            CurrentPage = pageNumber > 0 ? pageNumber : 1;
+            PageSize = pageSize > 0 ? pageSize : 10;
+
+            if (!string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                // Режим поиска с пагинацией
+                SearchResult = await _taskService.SearchAsync(SearchQuery, CurrentPage, PageSize);
+                Tasks = SearchResult.Items;
+            }
+            else
+            {
+                // Обычный режим - все задачи
+                Tasks = await _taskService.GetAllAsync();
+            }
         }
         catch (Exception ex)
         {
