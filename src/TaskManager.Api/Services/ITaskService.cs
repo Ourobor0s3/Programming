@@ -9,7 +9,12 @@ namespace TaskManager.Api.Services
         Task<List<TaskItem>> GetAllAsync();
         Task<TaskItem?> GetByIdAsync(int id);
         Task<TaskItem> CreateAsync(TaskItem task);
-        Task<bool> UpdateAsync(TaskItem task);
+        Task<TaskItem> UpdateAsync(TaskItem task);
         Task<bool> DeleteAsync(int id);
+
+        // Для export/search
+        Task<(List<TaskItem> Items, int TotalCount)> SearchRawAsync(string q, int page, int pageSize);
+        Task<SearchResultDto> SearchAsync(string q, int page, int pageSize);
+        Task ExportToFileAsync(string path);
     }
 }

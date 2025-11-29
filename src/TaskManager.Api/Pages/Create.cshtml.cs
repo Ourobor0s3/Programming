@@ -1,61 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
 
-namespace TaskManager.Api.Pages
+namespace TaskManager.Api.Pages;
+
+public class CreateModel : PageModel
 {
-    public class CreateModel : PageModel
+    private readonly ITaskService _service;
+
+    public CreateModel(ITaskService service)
     {
-        private readonly TaskService _taskService;
+        _service = service;
+    }
 
-        public CreateModel(TaskService taskService)
+    [BindProperty]
+    public TaskItem TaskItem { get; set; } = new TaskItem();
+
+    public void OnGet() { }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
-            _taskService = taskService;
+            // серверная валидация — вернём страницу с ошибками
+            return Page();
         }
 
-        [BindProperty]
-        public TaskItem Task { get; set; } = new TaskItem();
-
-        public void OnGet()
-        {
-            // Инициализируем задачу с дефолтными значениями
-            Task = new TaskItem
-            {
-                DueDate = DateTime.Now
-            };
-        }
-
-        public IActionResult OnPost()
-        {
-            // Проверяем валидацию модели
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            try
-            {
-                // Убеждаемся, что ID не установлен (будет установлен сервисом)
-                Task.Id = 0;
-                
-                var created = _taskService.AddTask(Task);
-                if (created != null)
-                {
-                    TempData["SuccessMessage"] = "Задача успешно создана";
-                    return RedirectToPage("/Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Не удалось создать задачу");
-                    return Page();
-                }
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", $"Ошибка при создании задачи: {ex.Message}");
-                return Page();
-            }
-        }
+        await _service.CreateAsync(TaskItem);
+        return RedirectToPage("Index");
     }
 }

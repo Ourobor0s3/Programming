@@ -4,15 +4,35 @@
     ViewData["Title"] = "Список задач";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Задачи</h2>
-    <div>
-        <button type="button" class="btn btn-info me-2" onclick="exportTasks()">
-            📥 Экспорт в JSON
-        </button>
-        <a asp-page="/Create" class="btn btn-primary">
-            ➕ Создать задачу
-        </a>
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h2 class="mb-0 d-flex align-items-center">
+                <i class="bi bi-list-task me-2"></i>
+                Список задач
+            </h2>
+            @if (Model.Tasks != null && Model.Tasks.Count > 0)
+            {
+                <small class="text-muted">Всего задач: <strong>@Model.Tasks.Count</strong></small>
+            }
+        </div>
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+            <button type="button" class="btn btn-info btn-lg" onclick="exportTasks()" id="exportBtn" title="Скачать все задачи в JSON файл" style="min-width: 160px;">
+                <i class="bi bi-download"></i> Экспорт в JSON
+            </button>
+            <a href="/api/tasks/export?download=true" class="btn btn-outline-info btn-lg" title="Скачать файл напрямую" style="min-width: 160px;" download>
+                <i class="bi bi-download"></i> Скачать файл
+            </a>
+            <button type="button" class="btn btn-success btn-lg" onclick="document.getElementById('importFile').click()" title="Импортировать задачи из JSON файла">
+                <i class="bi bi-upload"></i> Импорт из JSON
+            </button>
+            <form method="post" asp-page-handler="Import" enctype="multipart/form-data" id="importForm" style="display: none;">
+                <input type="file" name="file" id="importFile" accept=".json" onchange="handleImport(this);" />
+            </form>
+            <a asp-page="/Create" class="btn btn-primary btn-lg" style="font-weight: 600; min-width: 180px;" title="Создать новую задачу">
+                <i class="bi bi-plus-circle-fill"></i> Создать задачу
+            </a>
+        </div>
     </div>
 </div>
 
@@ -34,77 +54,184 @@
 
 @if (Model.Tasks == null || Model.Tasks.Count == 0)
 {
-    <div class="alert alert-info">
-        <strong>📋</strong> Задач пока нет. <a asp-page="/Create" class="alert-link">Создайте первую задачу</a>
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <h3>Задач пока нет</h3>
+        <p class="text-muted mb-4">Создайте свою первую задачу, чтобы начать работу</p>
+        <a asp-page="/Create" class="btn btn-primary btn-lg" style="font-weight: 600; min-width: 200px;">
+            <i class="bi bi-plus-circle-fill"></i> Создать первую задачу
+        </a>
     </div>
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Заголовок</th>
-            <th>Описание</th>
-            <th>Срок выполнения</th>
-            <th>Статус</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var t in Model.Tasks)
-        {
-            <tr>
-                <td>@t.Id</td>
-                <td>@t.Title</td>
-                <td>@t.Description</td>
-                <td>@t.DueDate.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>@(t.IsDone ? "Выполнено" : "Открыта")</td>
-                <td>
-                    <div class="d-flex gap-1">
-                        <a asp-page="/Edit" asp-route-id="@t.Id" class="btn btn-sm btn-warning">
-                            ✏️ Изменить
-                        </a>
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@t.Id" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить задачу \"@t.Title\"?');">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                🗑️ Удалить
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th style="width: 60px;">ID</th>
+                    <th>Заголовок</th>
+                    <th>Описание</th>
+                    <th style="width: 180px;">Срок выполнения</th>
+                    <th style="width: 120px;">Статус</th>
+                    <th style="width: 150px;" class="text-end">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var t in Model.Tasks)
+                {
+                    <tr>
+                        <td><strong>#@t.Id</strong></td>
+                        <td>
+                            <strong>@t.Title</strong>
+                        </td>
+                        <td>
+                            <span class="text-muted">@(string.IsNullOrWhiteSpace(t.Description) ? "—" : (t.Description.Length > 50 ? t.Description.Substring(0, 50) + "..." : t.Description))</span>
+                        </td>
+                        <td>
+                            <i class="bi bi-calendar3 me-1"></i>
+                            <small>@t.DueDate.ToString("dd.MM.yyyy HH:mm")</small>
+                        </td>
+                        <td>
+                            @if (t.IsDone)
+                            {
+                                <span class="badge-status badge-completed">
+                                    <i class="bi bi-check-circle-fill"></i> Выполнено
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-status badge-open">
+                                    <i class="bi bi-clock"></i> Открыта
+                                </span>
+                            }
+                        </td>
+                        <td class="text-end action-buttons">
+                            <a asp-page="/Edit" asp-route-id="@t.Id" class="btn btn-sm btn-warning me-1" title="Редактировать">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@t.Id" class="d-inline" onsubmit="return confirmDelete('@t.Title');">
+                                <button type="submit" class="btn btn-sm btn-danger" title="Удалить">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
 
 @section Scripts {
     <script>
         async function exportTasks() {
+            const exportBtn = document.getElementById('exportBtn');
+            if (!exportBtn) return;
+            
+            const originalText = exportBtn.innerHTML;
+            
             try {
+                exportBtn.disabled = true;
+                exportBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Экспорт...';
+                
                 const response = await fetch('/api/tasks/export');
+                
                 if (response.ok) {
                     const data = await response.json();
-                    // Создаем blob и скачиваем файл
-                    const blob = new Blob([JSON.stringify(data.tasks, null, 2)], { type: 'application/json' });
+                    
+                    if (!data.tasks || data.tasks.length === 0) {
+                        showNotification('Нет задач для экспорта', 'error');
+                        return;
+                    }
+                    
+                    // Создаем JSON строку с правильной кодировкой
+                    const jsonString = JSON.stringify(data.tasks, null, 2);
+                    const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
+                    
+                    // Создаем ссылку для скачивания
                     const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'tasks_export.json';
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'tasks_export_' + new Date().toISOString().split('T')[0] + '.json';
+                    link.style.display = 'none';
+                    
+                    // Добавляем в DOM, кликаем и удаляем
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    // Очищаем через небольшую задержку
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(url);
+                    }, 100);
                     
                     // Показываем сообщение об успехе
-                    alert('Экспорт выполнен успешно! Файл tasks_export.json скачан.');
+                    showNotification('Экспорт выполнен успешно! Экспортировано задач: ' + data.count, 'success');
                 } else {
-                    const error = await response.json();
-                    alert('Ошибка при экспорте: ' + (error.error || 'Неизвестная ошибка'));
+                    let errorMessage = 'Неизвестная ошибка';
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.error || error.message || errorMessage;
+                    } catch (e) {
+                        errorMessage = 'Ошибка ' + response.status + ': ' + response.statusText;
+                    }
+                    showNotification('Ошибка при экспорте: ' + errorMessage, 'error');
                 }
             } catch (error) {
-                alert('Ошибка при экспорте: ' + error.message);
+                console.error('Export error:', error);
+                showNotification('Ошибка при экспорте: ' + error.message, 'error');
+            } finally {
+                exportBtn.disabled = false;
+                exportBtn.innerHTML = originalText;
             }
+        }
+
+        function handleImport(input) {
+            if (input.files && input.files[0]) {
+                const fileName = input.files[0].name;
+                if (!fileName.toLowerCase().endsWith('.json')) {
+                    showNotification('Пожалуйста, выберите JSON файл', 'error');
+                    input.value = '';
+                    return;
+                }
+                document.getElementById('importForm').submit();
+            }
+        }
+
+        function confirmDelete(taskTitle) {
+            return confirm(`Вы уверены, что хотите удалить задачу "${taskTitle}"?\n\nЭто действие нельзя отменить.`);
+        }
+
+        function showNotification(message, type) {
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            const alertHtml = `
+                <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            
+            const container = document.querySelector('.container');
+            const firstChild = container.firstElementChild;
+            if (firstChild && firstChild.classList.contains('page-header')) {
+                firstChild.insertAdjacentHTML('afterend', alertHtml);
+            } else {
+                container.insertAdjacentHTML('afterbegin', alertHtml);
+            }
+            
+            // Автоматически скрыть через 5 секунд
+            setTimeout(() => {
+                const alert = container.querySelector('.alert');
+                if (alert) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            }, 5000);
         }
     </script>
 }
