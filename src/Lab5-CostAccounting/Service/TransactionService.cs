@@ -27,8 +27,7 @@ namespace Lab5_CostAccounting.Service
             if (!string.IsNullOrWhiteSpace(getCategory))
             {
                 var cat = getCategory.Trim();
-                query = query.Where(x => x.Category != null &&
-                                         x.Category.Equals(cat, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(x => x.Category!.Equals(cat));
             }
 
             switch (sortDate)
@@ -62,12 +61,18 @@ namespace Lab5_CostAccounting.Service
             return res;
         }
 
-        public static async Task GetJsonSumCategory()
+        public static async Task GetJsonSumCategory(string? month)
         {
             try
             {
+                var findMonth = string.IsNullOrEmpty(month)
+                    ? DateTime.Now
+                    : DateTime.Parse(month);
+
                 await using var context = new TransactionsContext();
                 var transactions = context.Transactions
+                    .Where(x => x.Date.Month ==  findMonth.Month
+                             && x.Date.Year == findMonth.Year)
                     .GroupBy(x => x.Category)
                     .Select(g => new
                     {

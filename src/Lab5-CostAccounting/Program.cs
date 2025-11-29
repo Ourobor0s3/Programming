@@ -103,7 +103,7 @@ namespace Lab5_CostAccounting
                 while (true)
                 {
                     Console.WriteLine("\n=== УПРАВЛЕНИЕ ТРАНЗАКЦИЯМИ ===");
-                    Console.WriteLine("1. Отчет по категории за весь период");
+                    Console.WriteLine("1. Отчет по категории за период");
                     Console.WriteLine("2. Получить фильтрованную выборку:");
                     Console.WriteLine("3. Экспорт предыдущей выборки в xml и json");
                     Console.WriteLine("0. Выход");
@@ -115,14 +115,15 @@ namespace Lab5_CostAccounting
                     switch (choice)
                     {
                         case "1":
-                            _ = TransactionService.GetJsonSumCategory();
+                            Console.WriteLine("Введите месяц в формате ГГГГ.ММ:");
+                            _ = TransactionService.GetJsonSumCategory(Console.ReadLine());
                             break;
                         case "2":
-                            Console.WriteLine("Введите фильтр 'skip' (по умолчанию = 0):");
+                            Console.WriteLine("Введите номер страницы (по умолчанию = 1):");
                             var skipInput = Console.ReadLine();
-                            var skip = string.IsNullOrWhiteSpace(skipInput) ? 0 : int.TryParse(skipInput, out var s) ? s : 0;
+                            var skip = string.IsNullOrWhiteSpace(skipInput) ? 1 : int.TryParse(skipInput, out var s) ? s : 1;
 
-                            Console.WriteLine("Введите фильтр 'take' (по умолчанию = 4):");
+                            Console.WriteLine("Введите размер страницы (по умолчанию = 4):");
                             var takeInput = Console.ReadLine();
                             var take = string.IsNullOrWhiteSpace(takeInput) ? 4 : int.TryParse(takeInput, out var t) ? t : 4;
 
@@ -143,7 +144,7 @@ namespace Lab5_CostAccounting
                             var getCategory = string.IsNullOrWhiteSpace(getCategoryInput) ? null : getCategoryInput;
 
                             prevTransactions = TransactionService.GetTransactions(
-                                skip: skip,
+                                skip: (skip - 1) * take,
                                 take: take,
                                 sortDate: sortDate,
                                 sortCategory: sortCategory,
