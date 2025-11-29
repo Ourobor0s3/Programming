@@ -1,68 +1,50 @@
-﻿@page "{id:int}"
-@model TaskManager.Api.Pages.EditModel
+﻿@page
+@model EditModel
 @{
     ViewData["Title"] = "Редактировать задачу";
 }
 
-<div class="page-header">
-    <h2 class="mb-0 d-flex align-items-center">
-        <i class="bi bi-pencil-square me-2"></i>
-        Редактировать задачу #@Model.Task.Id
-    </h2>
-    <small class="text-muted">Измените необходимые поля и сохраните изменения</small>
-</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2>Редактировать задачу</h2>
+        <hr />
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        @TempData["ErrorMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
-<div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
-
-<div class="card">
-    <div class="card-body p-4">
         <form method="post">
-            <input asp-for="Task.Id" type="hidden" />
+            <input type="hidden" asp-for="TaskItem.Id" />
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="mb-3">
-        <label asp-for="Task.Title" class="form-label">Заголовок</label>
-        <input asp-for="Task.Title" class="form-control" />
-        <span asp-validation-for="Task.Title" class="text-danger"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="TaskItem.Title" class="form-label">Название <span class="text-danger">*</span></label>
+                <input asp-for="TaskItem.Title" class="form-control" />
+                <span asp-validation-for="TaskItem.Title" class="text-danger"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Task.Description" class="form-label">Описание</label>
-        <textarea asp-for="Task.Description" class="form-control" rows="4"></textarea>
-        <span asp-validation-for="Task.Description" class="text-danger"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="TaskItem.Description" class="form-label">Описание</label>
+                <textarea asp-for="TaskItem.Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="TaskItem.Description" class="text-danger"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Task.DueDate" class="form-label">Срок выполнения</label>
-        <input asp-for="Task.DueDate" type="datetime-local" class="form-control" 
-               value="@Model.Task.DueDate.ToString("yyyy-MM-ddTHH:mm")" />
-        <span asp-validation-for="Task.DueDate" class="text-danger"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="TaskItem.DueDate" class="form-label">Срок выполнения</label>
+                <input asp-for="TaskItem.DueDate" type="datetime-local" class="form-control" value="@Model.TaskItem.DueDate.ToString("yyyy-MM-ddTHH:mm")" />
+                <span asp-validation-for="TaskItem.DueDate" class="text-danger"></span>
+            </div>
 
-    <div class="form-check mb-3">
-        <input asp-for="Task.IsDone" class="form-check-input" />
-        <label asp-for="Task.IsDone" class="form-check-label">Выполнено</label>
-    </div>
+            <div class="mb-3 form-check">
+                <input asp-for="TaskItem.IsDone" type="checkbox" class="form-check-input" />
+                <label asp-for="TaskItem.IsDone" class="form-check-label">Выполнено</label>
+            </div>
 
-            <div class="d-flex gap-2 mt-4">
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-check-circle"></i> Сохранить изменения
-                </button>
-                <a asp-page="/Index" class="btn btn-secondary">
-                    <i class="bi bi-x-circle"></i> Отмена
-                </a>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
             </div>
         </form>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="Shared/_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

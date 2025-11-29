@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
 
@@ -9,40 +8,36 @@ namespace TaskManager.Api.Pages;
 public class EditModel : PageModel
 {
     private readonly ITaskService _taskService;
+    private readonly ILogger<EditModel> _logger;
 
-    public EditModel(ITaskService taskService)
+    public EditModel(ITaskService taskService, ILogger<EditModel> logger)
     {
         _taskService = taskService;
+        _logger = logger;
     }
 
     [BindProperty]
-    public TaskItem Task { get; set; } = null!;
+    public TaskItem TaskItem { get; set; } = new();
 
-    public async Task<IActionResult> OnGetAsync(int id)
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        var task = await _taskService.GetByIdAsync(id);
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var task = await _taskService.GetByIdAsync(id.Value);
         if (task == null)
         {
             return NotFound();
         }
 
-        Task = task;
+        TaskItem = task;
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(int id)
+    public async Task<IActionResult> OnPostAsync()
     {
-        // Убеждаемся, что ID совпадает
-        Task.Id = id;
-
-        // Проверяем существование задачи
-        var existing = await _taskService.GetByIdAsync(id);
-        if (existing == null)
-        {
-            TempData["ErrorMessage"] = "Задача не найдена";
-            return RedirectToPage("/Index");
-        }
-
         if (!ModelState.IsValid)
         {
             return Page();
@@ -50,19 +45,20 @@ public class EditModel : PageModel
 
         try
         {
-            var updated = await _taskService.UpdateAsync(Task);
-            /*if (!updated)
+            var existingTask = await _taskService.GetByIdAsync(TaskItem.Id);
+            if (existingTask == null)
             {
-                ModelState.AddModelError(string.Empty, "Не удалось обновить задачу");
-                return Page();
-            }*/
+                return NotFound();
+            }
 
-            TempData["SuccessMessage"] = $"Задача \"{Task.Title}\" успешно обновлена";
-            return RedirectToPage("/Index");
+            await _taskService.UpdateAsync(TaskItem);
+            TempData["SuccessMessage"] = "Задача успешно обновлена";
+            return RedirectToPage("./Index");
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError(string.Empty, $"Ошибка при обновлении задачи: {ex.Message}");
+            _logger.LogError(ex, "Ошибка при обновлении задачи id={Id}", TaskItem.Id);
+            ModelState.AddModelError("", "Ошибка при обновлении задачи. Попробуйте еще раз.");
             return Page();
         }
     }

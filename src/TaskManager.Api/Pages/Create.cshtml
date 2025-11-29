@@ -1,16 +1,49 @@
-﻿@page
-@model TaskManager.Api.Pages.CreateModel
-<form method="post">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label>Title</label>
-        <input asp-for="TaskItem.Title" />
-        <span asp-validation-for="TaskItem.Title"></span>
+@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Создать задачу";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2>Создать новую задачу</h2>
+        <hr />
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="TaskItem.Title" class="form-label">Название <span class="text-danger">*</span></label>
+                <input asp-for="TaskItem.Title" class="form-control" />
+                <span asp-validation-for="TaskItem.Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TaskItem.Description" class="form-label">Описание</label>
+                <textarea asp-for="TaskItem.Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="TaskItem.Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TaskItem.DueDate" class="form-label">Срок выполнения</label>
+                <input asp-for="TaskItem.DueDate" type="datetime-local" class="form-control" value="@Model.TaskItem.DueDate.ToString("yyyy-MM-ddTHH:mm")" />
+                <span asp-validation-for="TaskItem.DueDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="TaskItem.IsDone" type="checkbox" class="form-check-input" />
+                <label asp-for="TaskItem.IsDone" class="form-check-label">Выполнено</label>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Создать</button>
+                <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
     </div>
-    <!-- другие поля -->
-    <button type="submit">Создать</button>
-</form>
+</div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
