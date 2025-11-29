@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text;
 using LogSaveService;
-using Microsoft.EntityFrameworkCore;
 
 public static class SyncService
 {

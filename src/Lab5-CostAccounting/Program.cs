@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Lab5_CostAccounting.Service;
+﻿using Lab5_CostAccounting.Service;
 using LogSaveService;
 using Npgsql;
 using NpgsqlTypes;

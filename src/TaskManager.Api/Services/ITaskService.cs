@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using TaskManager.Api.Models;
+﻿using TaskManager.Api.Models;
 
 namespace TaskManager.Api.Services
 {

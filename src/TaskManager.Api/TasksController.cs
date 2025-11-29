@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Text.Json;
-using System.IO;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
-using Microsoft.AspNetCore.Http;
 
 namespace TaskManager.Api
 {

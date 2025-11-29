@@ -1,9 +1,5 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using TaskManager.Api.Data;
-using TaskManager.Api.Models;
 using TaskManager.Api.Services;
 using TaskManager.Api.Services.Impl;
 

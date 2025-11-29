@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Xml.Xsl;
 using Lab6_InventoryManager.Entities;
 
 namespace Lab6_InventoryManager.Service

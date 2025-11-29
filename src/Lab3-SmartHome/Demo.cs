@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Lab3.Class;
+﻿using Lab3.Class;
 using Lab3.Controllers;
 
 namespace Lab3

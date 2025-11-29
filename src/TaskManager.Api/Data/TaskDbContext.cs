@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Api.Models;
 
@@ -41,4 +40,3 @@ public class TaskDbContext : DbContext
             .ValueGeneratedOnAdd();
     }
 }
-
