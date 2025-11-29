@@ -4,9 +4,19 @@
     ViewData["Title"] = Model.IsSearchMode ? "Поиск задач" : "Список задач";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>@(Model.IsSearchMode ? "Поиск задач" : "Список задач")</h1>
-    <a asp-page="/Create" class="btn btn-primary">Создать задачу</a>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <h1 class="mb-0">@(Model.IsSearchMode ? "Поиск задач" : "Список задач")</h1>
+    <div class="d-flex gap-2">
+        <a asp-page="/Create" class="btn btn-primary">Создать задачу</a>
+        <form method="post" asp-page-handler="Export">
+            <input type="hidden" name="q" value="@Model.SearchQuery" />
+            <input type="hidden" name="pageNumber" value="@Model.CurrentPage" />
+            <input type="hidden" name="pageSize" value="@Model.PageSize" />
+            <button type="submit" class="btn btn-outline-secondary">
+                Экспортировать задачи
+            </button>
+        </form>
+    </div>
 </div>
 
 <!-- Форма поиска -->

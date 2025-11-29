@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
 
@@ -9,11 +12,19 @@ public class IndexModel : PageModel
 {
     private readonly ITaskService _taskService;
     private readonly ILogger<IndexModel> _logger;
+    private readonly IWebHostEnvironment _environment;
+    private readonly ExportServiceOptions _exportOptions;
 
-    public IndexModel(ITaskService taskService, ILogger<IndexModel> logger)
+    public IndexModel(
+        ITaskService taskService,
+        ILogger<IndexModel> logger,
+        IWebHostEnvironment environment,
+        IOptions<ExportServiceOptions> exportOptions)
     {
         _taskService = taskService;
         _logger = logger;
+        _environment = environment;
+        _exportOptions = exportOptions.Value;
     }
 
     public List<TaskItem> Tasks { get; set; } = new();
@@ -71,5 +82,37 @@ public class IndexModel : PageModel
         }
 
         return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostExportAsync(string? q, int pageNumber = 1, int pageSize = 10)
+    {
+        try
+        {
+            var exportPath = Path.Combine(_environment.ContentRootPath, _exportOptions.ExportFilePath);
+            await _taskService.ExportToFileAsync(exportPath);
+
+            if (!System.IO.File.Exists(exportPath))
+            {
+                throw new FileNotFoundException("Файл экспорта не найден после создания.", exportPath);
+            }
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(exportPath);
+            var downloadFileName = Path.GetFileName(exportPath);
+            if (string.IsNullOrWhiteSpace(downloadFileName))
+            {
+                downloadFileName = $"tasks_export_{DateTime.UtcNow:yyyyMMddHHmmss}.json";
+            }
+
+            return File(fileBytes, "application/json", downloadFileName);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка при экспорте задач вручную");
+            TempData["ErrorMessage"] = $"Ошибка при экспорте задач: {ex.Message}";
+        }
+
+        var redirectPage = pageNumber > 0 ? pageNumber : 1;
+        var redirectSize = pageSize > 0 ? pageSize : PageSize;
+        return RedirectToPage(new { q, pageNumber = redirectPage, pageSize = redirectSize });
     }
 }
